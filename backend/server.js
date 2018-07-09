@@ -4,6 +4,8 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 import { getSecret } from './secrets';
 import Comment from './models/comment';
+import User from './models/user';
+import bcrypt from 'bcrypt'
 
 // and create our instances
 const app = express();
@@ -52,6 +54,81 @@ router.post('/comments', (req, res) => {
     return res.json({ success: true });
   });
 });
+
+router.put('/comments/:commentId', (req, res) => {
+  const { commentId } = req.params;
+  if (!commentId) {
+    return res.json({ success: false, error: 'No comment id provided' });
+  }
+  Comment.findById(commentId, (error, comment) => {
+    if (error) return res.json({ success: false, error });
+    const { author, text } = req.body;
+    if (author) comment.author = author;
+    if (text) comment.text = text;
+    comment.save(error => {
+      if (error) return res.json({ success: false, error });
+      return res.json({ success: true });
+    });
+  });
+});
+
+router.delete('/comments/:commentId', (req, res) => {
+  const { commentId } = req.params;
+  if (!commentId) {
+    return res.json({ success: false, error: 'No comment id provided' });
+  }
+  Comment.remove({ _id: commentId }, (error, comment) => {
+    if (error) return res.json({ success: false, error });
+    return res.json({ success: true });
+  });
+});
+
+router.get('/users', (req, res) => {
+  User.find((err, users) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, userData: users });
+  });
+});
+
+router.post('/usersignin/', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    // we should throw an error. we can do this check on the front end
+    return res.json({
+      success: false,
+      error: 'You must provide a username and password'
+    });
+  }
+  User.find({ username: username}, (err, docs) => {
+    if (err) return res.json({ success: false, error: err });
+    return bcrypt.compare(password, docs[0].password).then((response) => {
+      if (!response) return res.json({ success: false, error: 'Incorrect password'})
+      return res.json({ success: true, validUser: true });  
+    })
+  })
+});
+
+router.post('/users', (req, res) => {
+  const user = new User();
+  // body parser lets us use the req.body
+  const { username, password } = req.body;
+  if (!username || !password) {
+    // we should throw an error. we can do this check on the front end
+    return res.json({
+      success: false,
+      error: 'You must provide a username and password'
+    });
+  }
+  bcrypt.hash(password, 10).then((hash) => {
+    user.username = username;
+    user.password = hash
+    user.save(err => {
+      if (err) return res.json({ success: false, error: err });
+      return res.json({ success: true });
+    });
+  })
+});
+
 
 // Use our router configuration when we call /api
 app.use('/api', router);
