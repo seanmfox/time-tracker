@@ -20,7 +20,6 @@ class SignUp extends Component {
     const { username, password } = this.state;
     if (!username || !password) return;
     this.submitNewUser();
-    this.props.history.push('/');
   }
 
   submitNewUser = () => {
@@ -32,8 +31,11 @@ class SignUp extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     }).then(res => res.json()).then((res) => {
-      if (!res.success) this.setState({ error: res.error.message || res.error });
-      else this.setState({ username: '', password: '', error: null });
+      if (!res.success) {this.setState({ error: res.error.message || res.error });}
+      else {
+        this.setState({ username: '', password: '', error: null });
+        this.props.history.push('/');
+      }
     });
   }
 

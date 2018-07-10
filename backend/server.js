@@ -29,6 +29,86 @@ router.get('/', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
+// Get a list of users from the database
+router.get('/users', (req, res) => {
+  User.find((err, users) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, userData: users });
+  });
+});
+
+// Check if a user is valid by hashing and comparing password
+router.post('/usersignin/', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    // we should throw an error. we can do this check on the front end
+    return res.json({
+      success: false,
+      error: 'You must provide a username and password'
+    });
+  }
+  User.find({ username: username}, (err, docs) => {
+    if (err) return res.json({ success: false, error: err });
+    return bcrypt.compare(password, docs[0].password).then((response) => {
+      if (!response) return res.json({ success: false, error: 'Incorrect password'})
+      return res.json({ success: true, validUser: true, userId: docs[0]._id });  
+    })
+  })
+});
+
+// Create a new user
+router.post('/users', (req, res) => {
+  const user = new User();
+  // body parser lets us use the req.body
+  const { username, password } = req.body;
+  if (!username || !password) {
+    // we should throw an error. we can do this check on the front end
+    return res.json({
+      success: false,
+      error: 'You must provide a username and password'
+    });
+  }
+  bcrypt.hash(password, 10).then((hash) => {
+    user.username = username;
+    user.password = hash
+    user.save(err => {
+      if (err) return res.json({ success: false, error: err });
+      return res.json({ success: true });
+    });
+  })
+});
+
+// List a user's tracked activities
+router.get('/activities/:userId', (req, res) => {
+  const { userId } = req.params
+  User.findById(userId, (err, user) => {
+    if (err) return res.json({ success: false, error: err});
+    return res.json({ success: true, activities: user.activities})
+  })
+})
+
+// Create a new tracked time
+router.post('/activities', (req, res) => {
+  const { activityType, time, userId } = req.body;
+  if (!activityType || !time) {
+    return res.json({
+      success: false,
+      error: 'An activity type and time must be provided'
+    });
+  }
+  User.findById(userId, (err, user) => {
+    if(err) return res.json({ success: false, error: err});
+    user.activities.push({ activityType: activityType, time: time})
+    user.save((err) => {
+      if (err) return res.json({  success: false, error: err });
+      return res.json({ success: true })
+    });
+  })
+})
+
+
+
+
 router.get('/comments', (req, res) => {
   Comment.find((err, comments) => {
     if (err) return res.json({ success: false, error: err });
@@ -82,53 +162,6 @@ router.delete('/comments/:commentId', (req, res) => {
     return res.json({ success: true });
   });
 });
-
-router.get('/users', (req, res) => {
-  User.find((err, users) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, userData: users });
-  });
-});
-
-router.post('/usersignin/', (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    // we should throw an error. we can do this check on the front end
-    return res.json({
-      success: false,
-      error: 'You must provide a username and password'
-    });
-  }
-  User.find({ username: username}, (err, docs) => {
-    if (err) return res.json({ success: false, error: err });
-    return bcrypt.compare(password, docs[0].password).then((response) => {
-      if (!response) return res.json({ success: false, error: 'Incorrect password'})
-      return res.json({ success: true, validUser: true });  
-    })
-  })
-});
-
-router.post('/users', (req, res) => {
-  const user = new User();
-  // body parser lets us use the req.body
-  const { username, password } = req.body;
-  if (!username || !password) {
-    // we should throw an error. we can do this check on the front end
-    return res.json({
-      success: false,
-      error: 'You must provide a username and password'
-    });
-  }
-  bcrypt.hash(password, 10).then((hash) => {
-    user.username = username;
-    user.password = hash
-    user.save(err => {
-      if (err) return res.json({ success: false, error: err });
-      return res.json({ success: true });
-    });
-  })
-});
-
 
 // Use our router configuration when we call /api
 app.use('/api', router);

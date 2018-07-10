@@ -36,7 +36,6 @@ class App extends Component {
 
   render() {
     const { validUser, userData } = this.state
-    console.log(validUser)
 
     return (
       <div>
