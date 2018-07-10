@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserForm from './UserForm'
-// import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 class SignUp extends Component {
   state = {
@@ -26,7 +26,7 @@ class SignUp extends Component {
   submitNewUser = () => {
     const { username, password } = this.state;
     const userData = [...this.props.userData, { username, password, _id: Date.now().toString() }];
-    this.props.onUserDataUpdate({ userData });
+    this.props.onUserDataUpdate(userData);
     fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -56,4 +56,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
