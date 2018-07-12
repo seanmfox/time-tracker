@@ -15,7 +15,7 @@ const router = express.Router();
 const API_PORT = process.env.API_PORT || 3001;
 
 // db config -- set your URI from mLab in secrets.js
-mongoose.connect(getSecret('dbUri'));
+mongoose.connect(getSecret('dbUri'), { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -89,16 +89,16 @@ router.get('/activities/:userId', (req, res) => {
 
 // Create a new tracked time
 router.post('/activities', (req, res) => {
-  const { activityType, time, userId } = req.body;
-  if (!activityType || !time) {
+  const { activityType, time, date, userId } = req.body;
+  if (!activityType || !time || !date) {
     return res.json({
       success: false,
-      error: 'An activity type and time must be provided'
+      error: 'An activity type, date and time must be provided'
     });
   }
   User.findById(userId, (err, user) => {
     if(err) return res.json({ success: false, error: err});
-    user.activities.push({ activityType: activityType, time: time})
+    user.activities.push({ activityType: activityType, time: time, date: date})
     user.save((err) => {
       if (err) return res.json({  success: false, error: err });
       return res.json({ success: true })

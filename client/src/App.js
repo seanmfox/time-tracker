@@ -51,10 +51,14 @@ class App extends Component {
            )
         )}/>
         <Route path='/dashboard' render={() => 
-          <Dashboard
-          userData={userData}
-          validUserStatus={(status) => this.setValidUser(status)}
-          />
+          validUser ? (
+            <Dashboard
+            userData={userData}
+            validUserStatus={(status) => this.setValidUser(status)}
+            />
+          ) : (
+            <Redirect to='/' />
+          )
         }/>
         <Route path='/signup' render={() => 
           <SignUp

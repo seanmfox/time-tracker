@@ -2,26 +2,28 @@ import React, { Component } from 'react';
 
 class ActivityForm extends Component {
   state = {
-    time: 0,
+    time: '',
     activityType: 'class',
-    error: ''
+    error: null,
   }
 
   submitForm = (e) => {
     e.preventDefault()
     const { activityType, time } = this.state
-    if (!activityType || !time) return;
-    this.submitNewActivity(activityType, time)
+    const date = document.querySelector('.date').value
+    if (!activityType || !time || !date) return;
+    this.submitNewActivity(activityType, time, new Date(date).toISOString())
   }
 
-  submitNewActivity = (activityType, time) => {
+  submitNewActivity = (activityType, time, date) => {
+    console.log(date)
     const { userId } = this.props
-    const activities = [...this.props.activities, { activityType, time, _id: Date.now().toString() }];
+    const activities = [...this.props.activities, { activityType, time, date, _id: Date.now().toString() }];
     this.props.onActivityUpdate(activities);
     fetch('/api/activities', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ activityType, time, userId }),
+      body: JSON.stringify({ activityType, time, userId, date }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) {this.setState({ error: res.error.message || res.error });}
       else {
@@ -42,6 +44,12 @@ class ActivityForm extends Component {
     this.setState(newState);
   }
 
+  onChangeDate = (e) => {
+    const newState = { ...this.state };
+    newState[e.target.name] = e.target.value;
+    this.setState(newState);
+  }
+
   handleSelectChange = (e) => {
     const newState = { ...this.state };
     newState[e.target.name] = e.target.value;
@@ -49,19 +57,20 @@ class ActivityForm extends Component {
   }
 
   render() {
-    const {time, activityType} = this.state
+    const { time, activityType } = this.state
 
     return (
       <div>
-        <form onSubmit={(e) => this.submitForm(e)}>
+        <form onSubmit={this.submitForm}>
           <select className='time-input' name='activityType' value={activityType} onChange={this.handleSelectChange}>
             <option value='class'>Class</option>
             <option value='athletics'>Athletics</option>
             <option value='studying'>Studying</option>
             <option value='sleeping'>Sleeping</option>
-            <option value='socializing'>socializing</option>
+            <option value='socializing'>Socializing</option>
           </select>
           <input value={time} type='number' name='time' onChange={this.onChangeTime}/>
+          <input type='date' name='date' className='date'/>
           <button type='submit'>Submit Activity</button>
         </form>
       </div>
