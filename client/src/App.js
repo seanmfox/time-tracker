@@ -15,6 +15,7 @@ class App extends Component {
 
   componentDidMount() {
     this.loadUsersFromServer();
+    this.localStorageUpdate();
   }
 
   loadUsersFromServer = () => {
@@ -24,6 +25,12 @@ class App extends Component {
       if (!res.success) this.setState({ error: res.error });
       else this.setState({ userData: res.userData });
     });
+  }
+
+  localStorageUpdate = () => {
+    if (localStorage.getItem('validUser')) { 
+      this.setState({validUser: localStorage.getItem('validUser')})
+    }
   }
 
   setValidUser = (status) => {

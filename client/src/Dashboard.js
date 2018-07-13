@@ -8,11 +8,13 @@ import ActivityList from './ActivityList'
 
 class Dashboard extends Component {
   state = {
-    activities: []
+    activities: [],
+    weekStart: ''
   }
 
   componentDidMount() {
     this.loadActivitiesFromServer();
+    this.setCurrentWeek();
   }
 
   loadActivitiesFromServer = () => {
@@ -25,11 +27,25 @@ class Dashboard extends Component {
     });
   }
 
+  setCurrentWeek = () => {
+    const currentDate = new Date(Date.now())
+    const weekBeginningDate = currentDate.getUTCDate() - currentDate.getUTCDay()
+    const startOfDay = new Date(currentDate.setUTCDate(weekBeginningDate))
+    startOfDay.setUTCHours(0, 0, 0, 0)
+    this.setState({ weekStart: startOfDay.valueOf()})
+  }
+
   signOut = () => {
     localStorage.removeItem('userId')
     localStorage.removeItem('validUser')
     this.props.validUserStatus(false)
     this.props.history.push('/');
+  }
+
+  changeWeek = (shift) => {
+    this.setState(prevState => (
+      { weekStart: (prevState.weekStart + shift) }
+    ))
   }
 
   updateActivities = (activities) => {
@@ -39,10 +55,12 @@ class Dashboard extends Component {
   render() {
     const userData = (this.props.userData ? this.props.userData : this.props.location.state.userData)
     const userId = localStorage.getItem('userId')
-    const { activities } = this.state
+    const { activities, weekStart } = this.state
 
     return (
       <div>
+        <button onClick={() => this.changeWeek(-604800000)}>Previous Week</button>
+        <button onClick={() => this.changeWeek(604800000)}>Next Week</button>
         <ActivityForm 
           userId={userId}
           activities={activities}
@@ -50,6 +68,7 @@ class Dashboard extends Component {
         />
         <ActivityList 
           activities={activities}
+          weekStart={weekStart}
         />
         <UserList
           userData={ userData } 
