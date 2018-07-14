@@ -48,8 +48,8 @@ class Dashboard extends Component {
     ))
   }
 
-  updateActivities = (activities) => {
-    this.setState({ activities })
+  updateActivities = () => {
+    this.loadActivitiesFromServer()
   }
 
   render() {
@@ -64,11 +64,13 @@ class Dashboard extends Component {
         <ActivityForm 
           userId={userId}
           activities={activities}
-          onActivityUpdate={(activities) => this.updateActivities(activities)}
+          onActivityUpdate={() => this.updateActivities()}
         />
-        <ActivityList 
+        <ActivityList
+          userId={userId} 
           activities={activities}
           weekStart={weekStart}
+          onActivityUpdate={() => this.updateActivities()}
         />
         <UserList
           userData={ userData } 

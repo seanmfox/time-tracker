@@ -16,10 +16,7 @@ class ActivityForm extends Component {
   }
 
   submitNewActivity = (activityType, time, date) => {
-    console.log(date)
     const { userId } = this.props
-    const activities = [...this.props.activities, { activityType, time, date, _id: Date.now().toString() }];
-    this.props.onActivityUpdate(activities);
     fetch('/api/activities', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -28,6 +25,7 @@ class ActivityForm extends Component {
       if (!res.success) {this.setState({ error: res.error.message || res.error });}
       else {
         this.setState({ activityType: 'Class', time: 0, error: null });
+        this.props.onActivityUpdate();
       }
     });
   }

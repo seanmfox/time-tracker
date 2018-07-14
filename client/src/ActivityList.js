@@ -19,8 +19,13 @@ class ActivityList extends Component {
     return dayDate.toUTCString()
   }
 
+  activityDelete = () => {
+    this.props.onActivityUpdate()
+  }
+
   render() {
     const weekArray = this.newWeekArray()
+    const {userId} = this.props
     
     return (
       <div>
@@ -30,6 +35,8 @@ class ActivityList extends Component {
             <h2>{this.dayOfTheWeek(index)}</h2>
             <ActivityDaily 
               dailyActivities = {day}
+              userId={userId}
+              onActivityDelete={() => this.activityDelete()}
             />
             </div>
           ))) : (<p>There were no activities</p>)

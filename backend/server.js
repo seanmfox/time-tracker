@@ -106,7 +106,25 @@ router.post('/activities', (req, res) => {
   })
 })
 
-
+// Remove an activity
+router.delete('/activities/:activityId', (req, res) => {
+  const { activityId } = req.params
+  const { userId } = req.body
+  if (!activityId) {
+    return res.json({
+      success: false,
+      error: 'An activity ID must be provided'
+    });
+  }
+  User.findById(userId, (err, user) => {
+    if(err) return res.json({ success: false, error: err});
+    user.activities.id(activityId).remove()
+    user.save((err) => {
+      if (err) return res.json({  success: false, error: err });
+      return res.json({ success: true })
+    });
+  })
+})
 
 
 router.get('/comments', (req, res) => {
