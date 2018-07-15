@@ -13,6 +13,7 @@ const mongoose = require('mongoose')
 const Comment = require('./models/comment')
 const User = require('./models/user')
 const bcrypt = require('bcrypt')
+const path = require('path')
 
 
 // and create our instances
