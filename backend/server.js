@@ -15,13 +15,12 @@ const User = require('./models/user')
 const bcrypt = require('bcrypt')
 const path = require('path')
 
-
 // and create our instances
 const app = express();
 const router = express.Router();
 
 // set our port to either a predetermined port number if you have set it up, or 3001
-const API_PORT = process.env.API_PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 // db config -- set your URI from mLab in secrets.js
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
@@ -198,4 +197,4 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
