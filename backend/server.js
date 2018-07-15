@@ -15,7 +15,7 @@ const router = express.Router();
 const API_PORT = process.env.API_PORT || 3001;
 
 // db config -- set your URI from mLab in secrets.js
-mongoose.connect(getSecret('dbUri'), { useNewUrlParser: true });
+mongoose.connect((app.settings.env === 'development' ? getSecret('dbUri') : process.env.DB_URI), { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
