@@ -24,11 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-// now we can set the route path & initialize the API
-router.get('/', (req, res) => {
-  res.json({ message: 'Hello, World!' });
-});
-
 // Get a list of users from the database
 router.get('/users', (req, res) => {
   User.find((err, users) => {
@@ -183,5 +178,11 @@ router.delete('/comments/:commentId', (req, res) => {
 
 // Use our router configuration when we call /api
 app.use('/api', router);
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
