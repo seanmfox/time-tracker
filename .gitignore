@@ -1,3 +1,5 @@
 node_modules/
 
 backend/secrets.js
+
+client/.eslintrc.json
