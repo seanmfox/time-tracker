@@ -30,5 +30,4 @@
     "babel-preset-env": "^1.7.0"
   },
   "presets": ["env"]
-
 }
