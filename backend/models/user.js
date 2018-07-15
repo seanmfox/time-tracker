@@ -12,7 +12,4 @@ const UsersSchema = new Schema({
 }, { timestamps: true });
 
 // export our module to use in server.js
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = mongoose.model('User', UsersSchema);
+module.exports = mongoose.model('User', UsersSchema);

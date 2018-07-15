@@ -12,4 +12,4 @@ const CommentsSchema = new Schema({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = mongoose.model('Comment', CommentsSchema);
+module.exports = mongoose.model('Comment', CommentsSchema);
