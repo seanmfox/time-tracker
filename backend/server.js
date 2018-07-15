@@ -1,11 +1,20 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import logger from 'morgan';
-import mongoose from 'mongoose';
-import { getSecret } from './secrets';
-import Comment from './models/comment';
-import User from './models/user';
-import bcrypt from 'bcrypt'
+// import express from 'express';
+// import bodyParser from 'body-parser';
+// import logger from 'morgan';
+// import mongoose from 'mongoose';
+// import { getSecret } from './secrets';
+// import Comment from './models/comment';
+// import User from './models/user';
+// import bcrypt from 'bcrypt'
+const express = require('express')
+const bodyParser = require('body-parser')
+const logger = require('morgan')
+const mongoose = require('mongoose')
+const getSecret = require('./secrets')
+const Comment = require('./models/comment')
+const User = require('./models/user')
+const bcrypt = require('bcrypt')
+
 
 // and create our instances
 const app = express();
