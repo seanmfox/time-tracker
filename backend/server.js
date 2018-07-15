@@ -10,7 +10,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
-const secrets = require('./secrets')
 const Comment = require('./models/comment')
 const User = require('./models/user')
 const bcrypt = require('bcrypt')
@@ -24,7 +23,7 @@ const router = express.Router();
 const API_PORT = process.env.API_PORT || 3001;
 
 // db config -- set your URI from mLab in secrets.js
-mongoose.connect((app.settings.env === 'development' ? secrets.getSecret('dbUri') : process.env.DB_URI), { useNewUrlParser: true });
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
