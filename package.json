@@ -2,10 +2,13 @@
   "name": "time-tracker",
   "version": "1.0.0",
   "description": "Track how time is spent during the week",
+  "engines": {
+    "node": "10.6.0"
+  },
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd backend && node server.js",
+    "start": "cd backend && babel-node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "start:server": "cd backend && nodemon server.js --exec babel-node --presets=env",
     "start:client": "cd client && npm start",
@@ -21,9 +24,6 @@
     "mongoose": "^5.2.1",
     "morgan": "^1.9.0",
     "nodemon": "^1.17.5"
-  },
-  "engines": {
-    "node": "10.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

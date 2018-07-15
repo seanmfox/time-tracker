@@ -179,11 +179,14 @@ router.delete('/comments/:commentId', (req, res) => {
 // Use our router configuration when we call /api
 app.use('/api', router);
 
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'))
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
 }
-// app.get('/*', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
