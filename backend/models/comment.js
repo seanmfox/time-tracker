@@ -9,4 +9,7 @@ const CommentsSchema = new Schema({
 }, { timestamps: true });
 
 // export our module to use in server.js
-export default mongoose.model('Comment', CommentsSchema);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = mongoose.model('Comment', CommentsSchema);
