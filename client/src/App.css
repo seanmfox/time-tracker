@@ -1,0 +1,138 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  min-height: 100%;
+  position: relative;
+}
+
+header {
+  text-align: center;
+  background-color: green;
+  color: yellow;
+  font-family: 'Righteous', cursive;
+  font-size: 25px;
+}
+
+header h1 {
+  margin: 0;
+  padding-top: 10px;
+}
+
+.signin-page-container {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.signin-form {
+  padding: 20px;
+  margin: 0;
+}
+
+.signin-input {
+  width: 100%;
+}
+
+.full-width-button {
+  width: 100%;
+}
+
+.dashboard {
+  padding-bottom: 60px;
+}
+
+.activity-nav {
+  background-color: green;
+  padding: 8px 15px;
+}
+
+.activity-nav button {
+  display: block;
+  margin: 8px 0;
+  font-weight: 400;
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+
+.activity-form-container {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.description-input {
+  margin-left: 40px;
+}
+
+.type-input {
+  margin-left: 30px;
+}
+
+.duration-input {
+  margin-left: 4px;
+}
+
+.date-input {
+  margin-left: 86px;
+}
+
+.week-change-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 320px;
+  margin: 5px auto;
+}
+
+.activities {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day {
+  margin: 10px auto;
+  border: 1px solid;
+  padding: 10px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.day-header {
+  margin: 0;
+}
+
+.activity-form label {
+  display: block;
+}
+
+.activity-form-container.closed {
+  display: none;
+}
+
+.activity-submit {
+  margin-left: 0;
+}
+
+footer {
+  text-align: center;
+  background-color: green;
+  color: yellow;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
+
+.copyright {
+  margin: 0;
+}

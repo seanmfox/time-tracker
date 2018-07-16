@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // create new instance of the mongoose.schema. the schema takes an
 // object that shows the shape of your database entries.
-const Activity = new Schema({ activityType: String, time: Number, date: Date });
+const Activity = new Schema({ activityType: String, time: Number, date: Date, description: String });
 
 const UsersSchema = new Schema({
   username: String,

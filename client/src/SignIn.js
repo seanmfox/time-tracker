@@ -41,25 +41,25 @@ class SignIn extends Component {
     const { username, password } = this.state
 
     return (
-      <div>
-        <form onSubmit={(e) => this.signInUser(e)}>
+        <form className="signin-form" onSubmit={(e) => this.signInUser(e)}>
           <input
+            className="signin-input"
             type="text"
             name="username"
-            placeholder="Your username…"
+            placeholder="Username"
             value={username}
             onChange={this.onChangeText}
           />
           <input
+            className="signin-input"
             type="password"
             name="password"
-            placeholder="Password..."
+            placeholder="Password"
             value={password}
             onChange={this.onChangeText}
           />
-          <button type="submit">Sign In</button>
+          <button type="submit" className="full-width-button">Log In</button>
         </form>
-      </div>
     );
   }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import './UserBox.css';
 import { withRouter } from 'react-router-dom';
 import UserList from './UserList';
 import ActivityForm from './ActivityForm';
@@ -52,20 +51,31 @@ class Dashboard extends Component {
     this.loadActivitiesFromServer()
   }
 
+  toggleActivityForm = () => {
+    const activityFormContainer = document.querySelector('.activity-form-container')
+    activityFormContainer.classList.toggle('closed')
+  }
+
   render() {
     const userData = (this.props.userData ? this.props.userData : this.props.location.state.userData)
     const userId = localStorage.getItem('userId')
     const { activities, weekStart } = this.state
 
     return (
-      <div>
-        <button onClick={() => this.changeWeek(-604800000)}>Previous Week</button>
-        <button onClick={() => this.changeWeek(604800000)}>Next Week</button>
-        <ActivityForm 
-          userId={userId}
-          activities={activities}
-          onActivityUpdate={() => this.updateActivities()}
-        />
+      <div className="dashboard">
+        <nav className="activity-nav">
+          <button className="activity-form-toggle" onClick={this.toggleActivityForm}>Add Activity <i className="fas fa-caret-down"></i></button>
+          <ActivityForm 
+            userId={userId}
+            activities={activities}
+            onActivityUpdate={() => this.updateActivities()}
+          />
+          <button onClick={() => this.signOut()}>Sign Out</button>
+        </nav>
+        <div className="week-change-buttons">
+          <button onClick={() => this.changeWeek(-604800000)}>Previous Week</button>
+          <button onClick={() => this.changeWeek(604800000)}>Next Week</button>
+        </div>
         <ActivityList
           userId={userId} 
           activities={activities}
@@ -75,7 +85,6 @@ class Dashboard extends Component {
         <UserList
           userData={ userData } 
         />
-        <button onClick={() => this.signOut()}>Sign Out</button>
       </div>
     );
   }

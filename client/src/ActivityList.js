@@ -16,7 +16,7 @@ class ActivityList extends Component {
   dayOfTheWeek = (index) => {
     const { weekStart } = this.props
     const dayDate = new Date((weekStart + (index * 86400000)))
-    return dayDate.toUTCString()
+    return dayDate.toLocaleDateString('en-US', {timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric' })
   }
 
   activityDelete = () => {
@@ -28,16 +28,17 @@ class ActivityList extends Component {
     const {userId} = this.props
     
     return (
-      <div>
+      <div className="activities">
         {weekArray.length !== 0 ? 
           (weekArray.map((day, index) => (
-            <div key={index}>
-            <h2>{this.dayOfTheWeek(index)}</h2>
-            <ActivityDaily 
-              dailyActivities = {day}
-              userId={userId}
-              onActivityDelete={() => this.activityDelete()}
-            />
+            <div key={index} className="day">
+              <h2 className="day-header">{this.dayOfTheWeek(index)}</h2>
+              <hr/>
+              <ActivityDaily 
+                dailyActivities = {day}
+                userId={userId}
+                onActivityDelete={() => this.activityDelete()}
+              />
             </div>
           ))) : (<p>There were no activities</p>)
         }    

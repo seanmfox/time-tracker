@@ -4,7 +4,9 @@ import SignUp from './SignUp';
 import 'whatwg-fetch';
 import { Route, Redirect } from 'react-router-dom'
 import HomePage from './HomePage';
-// import CommentBox from './CommentBox';
+import './App.css'
+import Header from './Header'
+import Footer from './Footer'
 
 class App extends Component {
   state = {
@@ -45,7 +47,8 @@ class App extends Component {
     const { validUser, userData } = this.state
 
     return (
-      <div>
+      <div className="app">
+        <Header />
         <Route exact path="/" render={() => (
           validUser ? (
             <Redirect to={{
@@ -73,7 +76,7 @@ class App extends Component {
           userData={ userData }
         />  
         }/>
-
+        <Footer />
         
       </div>
     );

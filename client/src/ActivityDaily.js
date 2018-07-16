@@ -24,10 +24,10 @@ class ActivityDaily extends Component {
     const { dailyActivities } = this.props
 
     return (
-      <div>
+      <div className="day-body">
         {dailyActivities.map(activity => (
-          <div key={activity._id}>
-            <p>{activity.activityType} {activity.time} {activity.date}</p>
+          <div key={activity._id} className="activity">
+            <p>{activity.description} {activity.activityType} {activity.time}</p>
             <button onClick={() => this.deleteActivity(activity._id)}>Delete</button>
           </div>
         ))}

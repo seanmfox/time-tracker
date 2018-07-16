@@ -11,11 +11,12 @@ class HomePage extends Component {
   render() {
     
     return (
-      <div>
+      <div className="signin-page-container">
+        <h2>Log In</h2>
         <SignIn 
           validateUser={(status) => this.onUserValidation(status)}
           />
-        <Link to='/signup'>Sign up for a new account!</Link>
+        <Link to='/signup' className="signup-link">Sign up for a new account</Link>
       </div>
     );
   }

@@ -40,7 +40,7 @@ router.get('/users', (req, res) => {
   });
 });
 
-// Check if a user is valid by hashing and comparing password
+// Log in user after checking hashed password
 router.post('/usersignin/', (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -92,16 +92,16 @@ router.get('/activities/:userId', (req, res) => {
 
 // Create a new tracked time
 router.post('/activities', (req, res) => {
-  const { activityType, time, date, userId } = req.body;
-  if (!activityType || !time || !date) {
+  const { activityType, time, date, userId, description } = req.body;
+  if (!activityType || !time || !date || !description) {
     return res.json({
       success: false,
-      error: 'An activity type, date and time must be provided'
+      error: 'An activity type, description, date and time must be provided'
     });
   }
   User.findById(userId, (err, user) => {
     if(err) return res.json({ success: false, error: err});
-    user.activities.push({ activityType: activityType, time: time, date: date})
+    user.activities.push({ activityType: activityType, time: time, date: date, description: description})
     user.save((err) => {
       if (err) return res.json({  success: false, error: err });
       return res.json({ success: true })
