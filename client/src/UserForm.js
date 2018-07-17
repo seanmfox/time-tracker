@@ -5,16 +5,18 @@ const UserForm = props => (
     <input
       type="text"
       name="username"
-      placeholder="Your username…"
+      placeholder="Email Address"
       value={props.username}
       onChange={props.handleChangeText}
+      required
     />
     <input
       type="password"
       name="password"
-      placeholder="Password..."
+      placeholder="Password"
       value={props.password}
       onChange={props.handleChangeText}
+      required
     />
     <button type="submit">Create New User</button>
   </form>

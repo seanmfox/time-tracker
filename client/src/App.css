@@ -85,13 +85,27 @@ header h1 {
   margin-left: 86px;
 }
 
+.dashboard-content {
+  margin: 5px 20px;
+}
+
 .week-change-buttons {
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  width: 320px;
-  margin: 5px auto;
+}
+
+.weekly-recap {
+  border: 1px solid;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px auto;
+}
+
+.weekly-recap-heading {
+  margin: 0;
 }
 
 .activities {
@@ -104,7 +118,7 @@ header h1 {
   border: 1px solid;
   padding: 10px;
   border-radius: 10px;
-  width: 300px;
+  width: 100%;
 }
 
 .day-header {
@@ -135,4 +149,23 @@ footer {
 
 .copyright {
   margin: 0;
+  padding-top: 10px;
+}
+
+@media screen and (min-width: 700px) {
+
+  .activity-form-container {
+    width: 300px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+
+  .dashboard-content {
+    width: 960px;
+    margin: 0 auto;
+  }
+  .day {
+    width: 270px;
+  }
 }

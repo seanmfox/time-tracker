@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class ActivityForm extends Component {
   state = {
     time: '',
-    activityType: 'class',
+    activityType: 'Academics',
     error: null,
     description: ''
   }
@@ -56,22 +56,23 @@ class ActivityForm extends Component {
       <div className="activity-form-container closed">
         <form onSubmit={this.submitForm} className="activity-form">
           <label>Description
-            <input value={description} type='text' name='description' onChange={this.onChangeText} className="description-input"/>
+            <input value={description} type='text' name='description' onChange={this.onChangeText} className="description-input" required/>
           </label>
           <label>Activity Type
-            <select className='type-input' name='activityType' value={activityType} onChange={this.handleSelectChange}>
-              <option value='class'>Class</option>
-              <option value='athletics'>Athletics</option>
-              <option value='studying'>Studying</option>
-              <option value='sleeping'>Sleeping</option>
-              <option value='socializing'>Socializing</option>
+            <select className='type-input' name='activityType' value={activityType} onChange={this.handleSelectChange} required>
+              <option value='Academics'>Academics</option>
+              <option value='Athletics'>Athletics</option>
+              <option value='Studying'>Studying</option>
+              <option value='Work'>Work</option>
+              <option value='Socializing'>Socializing</option>
+              <option value='Other'>Other</option>
             </select>
           </label>
           <label>Activity Duration
-            <input value={time} type='number' name='time' onChange={this.onChangeTime} className="duration-input"/>
+            <input value={time} type='number' name='time' onChange={this.onChangeTime} className="duration-input" required/>
           </label>
           <label>Date
-            <input type='date' name='date-input' className='date-input'/>
+            <input type='date' name='date-input' className='date-input' required/>
           </label>
           <button type='submit' className="activity-submit">Submit Activity</button>
         </form>

@@ -3,7 +3,8 @@ import 'whatwg-fetch';
 import { withRouter } from 'react-router-dom';
 import UserList from './UserList';
 import ActivityForm from './ActivityForm';
-import ActivityList from './ActivityList'
+import ActivityList from './ActivityList';
+import WeeklyRecap from './WeeklyRecap';
 
 class Dashboard extends Component {
   state = {
@@ -72,19 +73,25 @@ class Dashboard extends Component {
           />
           <button onClick={() => this.signOut()}>Sign Out</button>
         </nav>
-        <div className="week-change-buttons">
-          <button onClick={() => this.changeWeek(-604800000)}>Previous Week</button>
-          <button onClick={() => this.changeWeek(604800000)}>Next Week</button>
-        </div>
-        <ActivityList
-          userId={userId} 
-          activities={activities}
-          weekStart={weekStart}
-          onActivityUpdate={() => this.updateActivities()}
-        />
-        <UserList
-          userData={ userData } 
-        />
+        <main className="dashboard-content">
+          <div className="week-change-buttons">
+            <button onClick={() => this.changeWeek(-604800000)}>Previous Week</button>
+            <button onClick={() => this.changeWeek(604800000)}>Next Week</button>
+          </div>
+          <WeeklyRecap 
+            activities={activities}
+            weekStart={weekStart}
+          />
+          <ActivityList
+            userId={userId} 
+            activities={activities}
+            weekStart={weekStart}
+            onActivityUpdate={() => this.updateActivities()}
+          />
+          <UserList
+            userData={ userData } 
+          />
+        </main>
       </div>
     );
   }
