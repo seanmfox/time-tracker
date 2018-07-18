@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { withRouter } from 'react-router-dom';
-import UserList from './UserList';
 import ActivityForm from './ActivityForm';
 import ActivityList from './ActivityList';
 import WeeklyRecap from './WeeklyRecap';
@@ -9,12 +8,10 @@ import WeeklyRecap from './WeeklyRecap';
 class Dashboard extends Component {
   state = {
     activities: [],
-    weekStart: ''
   }
 
   componentDidMount() {
     this.loadActivitiesFromServer();
-    this.setCurrentWeek();
   }
 
   loadActivitiesFromServer = () => {
@@ -27,25 +24,15 @@ class Dashboard extends Component {
     });
   }
 
-  setCurrentWeek = () => {
-    const currentDate = new Date(Date.now())
-    const weekBeginningDate = currentDate.getUTCDate() - currentDate.getUTCDay()
-    const startOfDay = new Date(currentDate.setUTCDate(weekBeginningDate))
-    startOfDay.setUTCHours(0, 0, 0, 0)
-    this.setState({ weekStart: startOfDay.valueOf()})
-  }
-
   signOut = () => {
     localStorage.removeItem('userId')
-    localStorage.removeItem('validUser')
-    this.props.validUserStatus(false)
+    localStorage.removeItem('userRole')
+    this.props.validUserRole('')
     this.props.history.push('/');
   }
 
-  changeWeek = (shift) => {
-    this.setState(prevState => (
-      { weekStart: (prevState.weekStart + shift) }
-    ))
+  changeOfWeek = (shift) => {
+    this.props.onChangeWeek(shift)
   }
 
   updateActivities = () => {
@@ -58,9 +45,9 @@ class Dashboard extends Component {
   }
 
   render() {
-    const userData = (this.props.userData ? this.props.userData : this.props.location.state.userData)
     const userId = localStorage.getItem('userId')
-    const { activities, weekStart } = this.state
+    const { activities } = this.state
+    const { weekStart } = this.props
 
     return (
       <div className="dashboard">
@@ -75,8 +62,8 @@ class Dashboard extends Component {
         </nav>
         <main className="dashboard-content">
           <div className="week-change-buttons">
-            <button onClick={() => this.changeWeek(-604800000)}>Previous Week</button>
-            <button onClick={() => this.changeWeek(604800000)}>Next Week</button>
+            <button onClick={() => this.changeOfWeek(-604800000)}>Previous Week</button>
+            <button onClick={() => this.changeOfWeek(604800000)}>Next Week</button>
           </div>
           <WeeklyRecap 
             activities={activities}
@@ -87,9 +74,6 @@ class Dashboard extends Component {
             activities={activities}
             weekStart={weekStart}
             onActivityUpdate={() => this.updateActivities()}
-          />
-          <UserList
-            userData={ userData } 
           />
         </main>
       </div>

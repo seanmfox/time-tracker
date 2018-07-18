@@ -8,7 +8,8 @@ const Activity = new Schema({ activityType: String, time: Number, date: Date, de
 const UsersSchema = new Schema({
   username: String,
   password: String,
-  activities: [Activity]
+  activities: [Activity],
+  userRole: {type: String, default: 'student'}
 }, { timestamps: true });
 
 // export our module to use in server.js

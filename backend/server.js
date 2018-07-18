@@ -35,6 +35,14 @@ app.use(logger('dev'));
 router.get('/users', (req, res) => {
   User.find({}, ('username'), (err, users) => {
     if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, userList: users });
+  });
+});
+
+// Get all user data from the database
+router.get('/userdata', (req, res) => {
+  User.find({ userRole: 'student' }, ('-password'), (err, users) => {
+    if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, userData: users });
   });
 });
@@ -49,11 +57,11 @@ router.post('/usersignin/', (req, res) => {
       error: 'You must provide a username and password'
     });
   }
-  User.find({ username: username}, (err, docs) => {
+  User.findOne({ username: username}, (err, doc) => {
     if (err) return res.json({ success: false, error: err });
-    return bcrypt.compare(password, docs[0].password).then((response) => {
+    return bcrypt.compare(password, doc.password).then((response) => {
       if (!response) return res.json({ success: false, error: 'Incorrect password'})
-      return res.json({ success: true, validUser: true, userId: docs[0]._id });  
+      return res.json({ success: true, validUser: true, userRole: doc.userRole, userId: doc._id });  
     })
   })
 });

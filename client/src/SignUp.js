@@ -6,7 +6,21 @@ class SignUp extends Component {
   state = {
     username: '',
     password: '',
-    error: ''
+    error: '',
+    userList: []
+  }
+
+  componentDidMount() {
+    this.loadUsersFromServer();
+  }
+
+  loadUsersFromServer = () => {
+    fetch('/api/users/')
+    .then(data => data.json())
+    .then((res) => {
+      if (!res.success) this.setState({ error: res.error });
+      else this.setState({ userList: res.userList });
+    });
   }
 
   onChangeText = (e) => {
@@ -17,15 +31,14 @@ class SignUp extends Component {
 
   submitUser = (e) => {
     e.preventDefault();
-    const { username, password } = this.state;
+    const { username, password, userList } = this.state;
     if (!username || !password) return;
+    if (userList.map(user => user.username).includes(username)) return;
     this.submitNewUser();
   }
 
   submitNewUser = () => {
     const { username, password } = this.state;
-    const userData = [...this.props.userData, { username, password, _id: Date.now().toString() }];
-    this.props.onUserDataUpdate(userData);
     fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -41,11 +54,11 @@ class SignUp extends Component {
 
   render() {
     const { username, password } = this.state
-    const { validUser } = this.props
+    const { userRole } = this.props
 
     return (
       <div>
-        {!validUser &&
+        {!userRole &&
         <UserForm
           username={username}
           password={password}

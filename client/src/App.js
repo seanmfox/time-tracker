@@ -7,64 +7,77 @@ import HomePage from './HomePage';
 import './App.css'
 import Header from './Header'
 import Footer from './Footer'
+import Admin from './Admin';
 
 class App extends Component {
   state = {
-    validUser: false,
+    userRole: '',
     error: '',
-    userData: []
+    weekStart: ''
   }
 
   componentDidMount() {
-    this.loadUsersFromServer();
     this.localStorageUpdate();
-  }
-
-  loadUsersFromServer = () => {
-    fetch('/api/users/')
-    .then(data => data.json())
-    .then((res) => {
-      if (!res.success) this.setState({ error: res.error });
-      else this.setState({ userData: res.userData });
-    });
+    this.setCurrentWeek();
   }
 
   localStorageUpdate = () => {
-    if (localStorage.getItem('validUser')) { 
-      this.setState({validUser: localStorage.getItem('validUser')})
+    if (localStorage.getItem('userRole')) {
+      this.setState({ userRole: localStorage.getItem('userRole') })
     }
   }
 
-  setValidUser = (status) => {
-    this.setState({ validUser: status })
+  setCurrentWeek = () => {
+    const currentDate = new Date(Date.now())
+    const weekBeginningDate = currentDate.getUTCDate() - currentDate.getUTCDay()
+    const startOfDay = new Date(currentDate.setUTCDate(weekBeginningDate))
+    startOfDay.setUTCHours(0, 0, 0, 0)
+    this.setState({ weekStart: startOfDay.valueOf()})
   }
 
-  userDataUpdate = (data) => {
-    this.setState({ userData: data })
+  changeWeek = (shift) => {
+    this.setState(prevState => (
+      { weekStart: (prevState.weekStart + shift) }
+    ))
   }
 
+  setUserRole = (role) => {
+    this.setState({ userRole: role })
+  }
+  
   render() {
-    const { validUser, userData } = this.state
+    const { userRole, weekStart } = this.state
 
     return (
       <div className="app">
         <Header />
         <Route exact path="/" render={() => (
-          validUser ? (
-            <Redirect to={{
-              pathname: "/dashboard",
-              state: { userData: userData }}}/>
+          userRole === 'admin' ? (
+            <Redirect to='/admin' />
+          ) : ( userRole === 'student' ? (
+                <Redirect to='/dashboard' />
           ) : (
             <HomePage
-              validUserStatus={(status) => this.setValidUser(status)}
+              validUserRole={(role) => this.setUserRole(role)}
             />
-           )
+          ))
         )}/>
+        <Route path='/admin' render={() => 
+          userRole === 'admin' ? (
+            <Admin
+              validUserRole={(role) => this.setUserRole(role)}
+              weekStart={weekStart}
+            />
+          ) : (
+            <Redirect to='/' />
+          )
+        }/>
         <Route path='/dashboard' render={() => 
-          validUser ? (
+          userRole === 'student' ? (
             <Dashboard
-            userData={userData}
-            validUserStatus={(status) => this.setValidUser(status)}
+            validUserRole={(role) => this.setUserRole(role)}
+            onChangeWeek={(timeChange) => this.changeWeek(timeChange)}
+            weekStart={weekStart}
             />
           ) : (
             <Redirect to='/' />
@@ -72,9 +85,8 @@ class App extends Component {
         }/>
         <Route path='/signup' render={() => 
           <SignUp
-          onUserDataUpdate={(data) => {this.userDataUpdate(data)}}
-          userData={ userData }
-        />  
+            userRole={userRole}
+          />  
         }/>
         <Footer />
         

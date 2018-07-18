@@ -22,10 +22,10 @@ class SignIn extends Component {
       body: JSON.stringify({ username, password }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
-      else if (res.validUser) {
+      else if (res.userRole) {
         localStorage.userId = res.userId
-        localStorage.validUser = res.validUser
-        this.props.validateUser(true)
+        localStorage.userRole = res.userRole
+        this.props.setUserRole(res.userRole)
         // this.setState({ username: '', password: '', error: null })
       };
     });
