@@ -141,6 +141,7 @@ app.use('/api', router);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
+  console.log(__dirname)
   app.use( express.static( `${__dirname}/../build` ) );
 
   // Handle React routing, return all requests to React app
@@ -157,4 +158,3 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-console.log(PORT)
