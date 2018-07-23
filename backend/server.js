@@ -141,12 +141,13 @@ app.use('/api', router);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
-  app.use(express.static(path.join('/app', 'client/build')));
+  app.use( express.static( `${__dirname}/../build` ) );
 
   // Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
-    res.sendFile(path.join('/app', 'client/build', 'index.html'));
-  });
+  app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+  })
+  
   // app.use(express.static(path.join(__dirname, 'client/build')));
 
   // // Handle React routing, return all requests to React app
@@ -156,3 +157,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+console.log(PORT)
