@@ -13,8 +13,10 @@ const mongoose = require('mongoose')
 const User = require('./models/user')
 const bcrypt = require('bcrypt')
 const path = require('path')
+const dotenv = require('dotenv')
 
 // and create our instances
+dotenv.config()
 const app = express();
 const router = express.Router();
 
@@ -147,13 +149,6 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res)=>{
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   })
-  
-  // app.use(express.static(path.join(__dirname, 'client/build')));
-
-  // // Handle React routing, return all requests to React app
-  // app.get('*', function(req, res) {
-  //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  // });
 }
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
