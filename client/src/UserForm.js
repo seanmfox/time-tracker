@@ -3,10 +3,10 @@ import React from 'react';
 const UserForm = props => (
   <form onSubmit={props.submitUser}>
     <input
-      type="text"
-      name="username"
+      type="email"
+      name="email"
       placeholder="Email Address"
-      value={props.username}
+      value={props.email}
       onChange={props.handleChangeText}
       required
     />

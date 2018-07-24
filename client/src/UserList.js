@@ -22,7 +22,7 @@ class UserList extends Component {
         (<select value={selectedUser} name='selectedUser' onChange={this.handleSelectChange}>
           <option></option>
         {userData.map(user => (
-          <option key={user._id} value={user._id}>{user.username}</option>
+          <option key={user._id} value={user._id}>{user.email}</option>
         ))}
         </select>)
          : (<p>There were no users</p>)

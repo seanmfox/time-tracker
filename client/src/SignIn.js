@@ -2,31 +2,31 @@ import React, { Component } from 'react';
 
 class SignIn extends Component {
   state = {
-    username: '',
+    email: '',
     password: '',
     error: ''
   }
 
   signInUser = (e) => {
     e.preventDefault()
-    const { username, password } = this.state;
-    if (!username || !password) return;
+    const { email, password } = this.state;
+    if (!email || !password) return;
       this.newSignIn();
   }
 
   newSignIn = () => {
-    const { username, password } = this.state;
+    const { email, password } = this.state;
     fetch('/api/usersignin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
       else if (res.userRole) {
         localStorage.userId = res.userId
         localStorage.userRole = res.userRole
         this.props.setUserRole(res.userRole)
-        // this.setState({ username: '', password: '', error: null })
+        // this.setState({ email: '', password: '', error: null })
       };
     });
   }
@@ -38,16 +38,16 @@ class SignIn extends Component {
   }
 
   render() {
-    const { username, password } = this.state
+    const { email, password } = this.state
 
     return (
         <form className="signin-form" onSubmit={(e) => this.signInUser(e)}>
           <input
             className="signin-input"
             type="text"
-            name="username"
-            placeholder="Username"
-            value={username}
+            name="email"
+            placeholder="email"
+            value={email}
             onChange={this.onChangeText}
           />
           <input

@@ -16,7 +16,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 
 // and create our instances
-dotenv.config()
+require('dotenv').config()
 const app = express();
 const router = express.Router();
 
@@ -27,6 +27,7 @@ const PORT = process.env.PORT || 3001;
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+console.log(process.env.DB_URI)
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,7 +36,7 @@ app.use(logger('dev'));
 
 // Get a list of users from the database
 router.get('/users', (req, res) => {
-  User.find({}, ('username'), (err, users) => {
+  User.find({}, ('email'), (err, users) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, userList: users });
   });
@@ -51,15 +52,15 @@ router.get('/userdata', (req, res) => {
 
 // Log in user after checking hashed password
 router.post('/usersignin/', (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     // we should throw an error. we can do this check on the front end
     return res.json({
       success: false,
-      error: 'You must provide a username and password'
+      error: 'You must provide a email and password'
     });
   }
-  User.findOne({ username: username}, (err, doc) => {
+  User.findOne({ email: email}, (err, doc) => {
     if (err) return res.json({ success: false, error: err });
     return bcrypt.compare(password, doc.password).then((response) => {
       if (!response) return res.json({ success: false, error: 'Incorrect password'})
@@ -72,16 +73,16 @@ router.post('/usersignin/', (req, res) => {
 router.post('/users', (req, res) => {
   const user = new User();
   // body parser lets us use the req.body
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     // we should throw an error. we can do this check on the front end
     return res.json({
       success: false,
-      error: 'You must provide a username and password'
+      error: 'You must provide a email and password'
     });
   }
   bcrypt.hash(password, 10).then((hash) => {
-    user.username = username;
+    user.email = email;
     user.password = hash
     user.save(err => {
       if (err) return res.json({ success: false, error: err });
