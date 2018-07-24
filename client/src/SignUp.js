@@ -4,8 +4,11 @@ import { withRouter } from 'react-router-dom'
 
 class SignUp extends Component {
   state = {
+    fname: '',
+    lname: '',
     email: '',
     password: '',
+    verifyPassword: '',
     error: '',
     userList: []
   }
@@ -31,37 +34,41 @@ class SignUp extends Component {
 
   submitUser = (e) => {
     e.preventDefault();
-    const { email, password, userList } = this.state;
-    if (!email || !password) return;
+    const { fname, lname, email, password, verifyPassword, userList } = this.state;
+    if (!fname || !lname || !email || !password || !verifyPassword) return;
     if (userList.map(user => user.email).includes(email)) return;
+    if (password !== verifyPassword) return;
     this.submitNewUser();
   }
 
   submitNewUser = () => {
-    const { email, password } = this.state;
+    const { fname, lname, email, password } = this.state;
     fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ fname, lname, email, password }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) {this.setState({ error: res.error.message || res.error });}
       else {
-        this.setState({ email: '', password: '', error: null });
+        this.setState({ fname: '', lname: '', email: '', password: '', verifyPassword: '', error: null });
         this.props.history.push('/');
       }
     });
   }
 
   render() {
-    const { email, password } = this.state
+    const { fname, lname, email, password, verifyPassword } = this.state
     const { userRole } = this.props
 
     return (
       <div>
         {!userRole &&
         <UserForm
+          fname={fname}
+          lname={lname}
           email={email}
           password={password}
+          verifyPassword={verifyPassword}
           handleChangeText={this.onChangeText}
           submitUser={this.submitUser}
         />

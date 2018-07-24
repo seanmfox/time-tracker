@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 class ActivityForm extends Component {
   state = {
-    time: '',
+    hour: 0,
+    minute: 0,
     activityType: 'Academics',
     error: null,
     description: ''
@@ -10,7 +11,8 @@ class ActivityForm extends Component {
 
   submitForm = (e) => {
     e.preventDefault()
-    const { activityType, time, description } = this.state
+    const { activityType, hour, minute, description } = this.state
+    const time = Number(hour) + (Math.round((Number(minute) / 60) * 100) / 100) 
     const date = document.querySelector('.date-input').value
     if (!activityType || !time || !date || !description) return;
     this.submitNewActivity(activityType, time, description, new Date(date).toISOString())
@@ -25,7 +27,7 @@ class ActivityForm extends Component {
     }).then(res => res.json()).then((res) => {
       if (!res.success) {this.setState({ error: res.error.message || res.error });}
       else {
-        this.setState({ activityType: 'Class', time: 0, error: null, description: '' });
+        this.setState({ activityType: 'Class', hour: 0, minute: 0, error: null, description: '' });
         this.props.onActivityUpdate();
       }
     });
@@ -50,7 +52,7 @@ class ActivityForm extends Component {
   }
 
   render() {
-    const { time, activityType, description } = this.state
+    const { hour, minute, activityType, description } = this.state
 
     return (
       <div className="activity-form-container closed">
@@ -69,7 +71,8 @@ class ActivityForm extends Component {
             </select>
           </label>
           <label>Activity Duration
-            <input value={time} type='number' name='time' onChange={this.onChangeTime} className="duration-input" required/>
+            <input value={hour !== 0 && hour} type='number' name='hour' onChange={this.onChangeTime} className="duration-input" placeholder="hours" required/>
+            <input value={minute !== 0 && minute} type='number' name='minute' onChange={this.onChangeTime} className="duration-input" placeholder="minutes" required/>
           </label>
           <label>Date
             <input type='date' name='date-input' className='date-input' required/>

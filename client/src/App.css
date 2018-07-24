@@ -79,6 +79,7 @@ header h1 {
 
 .duration-input {
   margin-left: 4px;
+  width: 75px;
 }
 
 .date-input {

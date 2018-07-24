@@ -31,7 +31,7 @@ class Admin extends Component {
   
   render() {
     const { userData } = this.state
-    const { weekStart } = this.props
+    const { weekStart, userRole } = this.props
     return (
       <div>
         <button onClick={() => this.signOut()}>Sign Out</button>
@@ -39,6 +39,7 @@ class Admin extends Component {
         <UserList 
           userData={userData}
           weekStart={weekStart}
+          userRole={userRole}
         />
 
       </div>

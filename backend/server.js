@@ -27,7 +27,6 @@ const PORT = process.env.PORT || 3001;
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-console.log(process.env.DB_URI)
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -64,7 +63,7 @@ router.post('/usersignin/', (req, res) => {
     if (err) return res.json({ success: false, error: err });
     return bcrypt.compare(password, doc.password).then((response) => {
       if (!response) return res.json({ success: false, error: 'Incorrect password'})
-      return res.json({ success: true, validUser: true, userRole: doc.userRole, userId: doc._id });  
+      return res.json({ success: true, validUser: true, userRole: doc.userRole, userId: doc._id, fname: doc.fname, lname: doc.lname });  
     })
   })
 });
@@ -73,15 +72,17 @@ router.post('/usersignin/', (req, res) => {
 router.post('/users', (req, res) => {
   const user = new User();
   // body parser lets us use the req.body
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { fname, lname, email, password } = req.body;
+  if (!email || !password || !fname || !lname) {
     // we should throw an error. we can do this check on the front end
     return res.json({
       success: false,
-      error: 'You must provide a email and password'
+      error: 'You must provide a first name, last name, email and password'
     });
   }
   bcrypt.hash(password, 10).then((hash) => {
+    user.fname = fname
+    user.lname = lname
     user.email = email;
     user.password = hash
     user.save(err => {

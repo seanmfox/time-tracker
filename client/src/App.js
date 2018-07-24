@@ -67,6 +67,7 @@ class App extends Component {
             <Admin
               validUserRole={(role) => this.setUserRole(role)}
               weekStart={weekStart}
+              userRole={userRole}
             />
           ) : (
             <Redirect to='/' />

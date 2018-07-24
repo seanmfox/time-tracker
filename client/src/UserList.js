@@ -14,7 +14,7 @@ class UserList extends Component {
 
   render() {
     const { selectedUser } = this.state
-    const { userData, weekStart } = this.props
+    const { userData, weekStart, userRole } = this.props
 
     return (
       <div>
@@ -22,13 +22,14 @@ class UserList extends Component {
         (<select value={selectedUser} name='selectedUser' onChange={this.handleSelectChange}>
           <option></option>
         {userData.map(user => (
-          <option key={user._id} value={user._id}>{user.email}</option>
+          <option key={user._id} value={user._id}>{user.fname} {user.lname}</option>
         ))}
         </select>)
          : (<p>There were no users</p>)
         }
         {selectedUser !== '' && 
           <WeeklyRecap 
+          userRole={userRole}
             weekStart={weekStart}
             activities={userData.find(user => selectedUser === user._id)['activities']}
           />

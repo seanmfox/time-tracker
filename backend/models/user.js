@@ -6,6 +6,8 @@ const Schema = mongoose.Schema;
 const Activity = new Schema({ activityType: String, time: Number, date: Date, description: String });
 
 const UsersSchema = new Schema({
+  fname: String,
+  lname: String,
   email: String,
   password: String,
   activities: [Activity],
