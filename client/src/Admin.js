@@ -33,9 +33,8 @@ class Admin extends Component {
     const { userData } = this.state
     const { weekStart, userRole } = this.props
     return (
-      <div>
+      <div className="admin">
         <button onClick={() => this.signOut()}>Sign Out</button>
-        <h1>You found the admin page!</h1>
         <UserList 
           userData={userData}
           weekStart={weekStart}

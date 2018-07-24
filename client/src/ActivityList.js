@@ -25,7 +25,7 @@ class ActivityList extends Component {
 
   render() {
     const weekArray = this.newWeekArray()
-    const {userId} = this.props
+    const { userId, userRole } = this.props
     
     return (
       <div className="activities">
@@ -38,6 +38,7 @@ class ActivityList extends Component {
                 dailyActivities = {day}
                 userId={userId}
                 onActivityDelete={() => this.activityDelete()}
+                userRole={userRole}
               />
             </div>
           ))) : (<p>There were no activities</p>)

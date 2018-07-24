@@ -21,14 +21,14 @@ class ActivityDaily extends Component {
   }
 
   render() {
-    const { dailyActivities } = this.props
+    const { dailyActivities, userRole } = this.props
 
     return (
       <div className="day-body">
         {dailyActivities.map(activity => (
           <div key={activity._id} className="activity">
             <p>{activity.description} {activity.activityType} {activity.time}</p>
-            <button onClick={() => this.deleteActivity(activity._id)}>Delete</button>
+            {!userRole && <button onClick={() => this.deleteActivity(activity._id)}>Delete</button>}
           </div>
         ))}
       </div>

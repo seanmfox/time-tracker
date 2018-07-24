@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import WeeklyRecap from './WeeklyRecap';
+import ActivityList from './ActivityList';
 
 class UserList extends Component {
   state = {
@@ -28,11 +29,19 @@ class UserList extends Component {
          : (<p>There were no users</p>)
         }
         {selectedUser !== '' && 
+        <div className="student-week">
           <WeeklyRecap 
           userRole={userRole}
             weekStart={weekStart}
             activities={userData.find(user => selectedUser === user._id)['activities']}
           />
+          <ActivityList
+            userRole={userRole}
+            userId={selectedUser}
+            weekStart={weekStart}
+            activities={userData.find(user => selectedUser === user._id)['activities']}
+          />
+          </div>
         }
       </div>
     );

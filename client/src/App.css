@@ -46,7 +46,7 @@ header h1 {
   width: 100%;
 }
 
-.dashboard {
+.dashboard, .admin {
   padding-bottom: 60px;
 }
 
