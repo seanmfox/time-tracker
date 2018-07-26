@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import WeeklyRecap from './WeeklyRecap';
-import ActivityList from './ActivityList';
+import WeekContent from './WeekContent';
 
 class UserList extends Component {
   state = {
@@ -11,6 +10,10 @@ class UserList extends Component {
     const newState = { ...this.state };
     newState[e.target.name] = e.target.value;
     this.setState(newState);
+  }
+
+  changeOfWeek = (shift) => {
+    this.props.onWeekChange(shift)
   }
 
   render() {
@@ -29,19 +32,15 @@ class UserList extends Component {
          : (<p>There were no users</p>)
         }
         {selectedUser !== '' && 
-        <div className="student-week">
-          <WeeklyRecap 
-          userRole={userRole}
-            weekStart={weekStart}
-            activities={userData.find(user => selectedUser === user._id)['activities']}
-          />
-          <ActivityList
+        <React.Fragment>
+          <WeekContent
             userRole={userRole}
-            userId={selectedUser}
+            onWeekChange={(shift) => this.changeOfWeek(shift)}
             weekStart={weekStart}
             activities={userData.find(user => selectedUser === user._id)['activities']}
+            userId={selectedUser}
           />
-          </div>
+        </React.Fragment>
         }
       </div>
     );

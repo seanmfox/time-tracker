@@ -46,7 +46,7 @@ header h1 {
   width: 100%;
 }
 
-.dashboard, .admin {
+.week-content {
   padding-bottom: 60px;
 }
 
@@ -86,7 +86,7 @@ header h1 {
   margin-left: 86px;
 }
 
-.dashboard-content {
+.week-content {
   margin: 5px 20px;
 }
 
@@ -157,16 +157,23 @@ footer {
 
   .activity-form-container {
     width: 300px;
+    margin: 0 auto;
   }
 }
 
 @media screen and (min-width: 1000px) {
 
-  .dashboard-content {
-    width: 960px;
+  .week-content, .admin {
+    width: 700px;
     margin: 0 auto;
   }
-  .day {
-    width: 270px;
+
+  .signin-page-container {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  .activity-nav button {
+    margin: 8px auto;
   }
 }

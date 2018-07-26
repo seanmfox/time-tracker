@@ -22,9 +22,18 @@ class App extends Component {
   }
 
   localStorageUpdate = () => {
-    if (localStorage.getItem('userRole')) {
-      this.setState({ userRole: localStorage.getItem('userRole') })
+    if (localStorage.getItem('userId') && this.state.userRole === '') {
+      this.authenticateUser()
     }
+  }
+
+  authenticateUser = () => {
+    fetch(`/api/authenticateuser/${localStorage.getItem('userId')}`)
+    .then(data => data.json())
+    .then((res) => {
+      if (!res.success) this.setState({ error: res.error });
+      else this.setState({ userRole: res.userRole });
+    });
   }
 
   setCurrentWeek = () => {
@@ -66,6 +75,7 @@ class App extends Component {
           userRole === 'admin' ? (
             <Admin
               validUserRole={(role) => this.setUserRole(role)}
+              onWeekChange={(timeChange) => this.changeWeek(timeChange)}
               weekStart={weekStart}
               userRole={userRole}
             />

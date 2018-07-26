@@ -68,6 +68,15 @@ router.post('/usersignin/', (req, res) => {
   })
 });
 
+//Authenticate user if already signed in
+router.get('/authenticateuser/:userId', (req, res) => {
+  const { userId } = req.params
+  User.findById(userId, (err, user) => {
+    if (err) return res.json({ success: false, error: err});
+    return res.json({ success: true, userRole: user.userRole})
+  })
+})
+
 // Create a new user
 router.post('/users', (req, res) => {
   const user = new User();

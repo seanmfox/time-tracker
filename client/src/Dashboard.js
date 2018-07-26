@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { withRouter } from 'react-router-dom';
 import ActivityForm from './ActivityForm';
-import ActivityList from './ActivityList';
-import WeeklyRecap from './WeeklyRecap';
+import WeekContent from './WeekContent';
 
 class Dashboard extends Component {
   state = {
@@ -61,18 +60,11 @@ class Dashboard extends Component {
           <button onClick={() => this.signOut()}>Sign Out</button>
         </nav>
         <main className="dashboard-content">
-          <div className="week-change-buttons">
-            <button onClick={() => this.changeOfWeek(-604800000)}>Previous Week</button>
-            <button onClick={() => this.changeOfWeek(604800000)}>Next Week</button>
-          </div>
-          <WeeklyRecap 
+          <WeekContent
+            onWeekChange={(shift) => this.changeOfWeek(shift)}
             activities={activities}
             weekStart={weekStart}
-          />
-          <ActivityList
-            userId={userId} 
-            activities={activities}
-            weekStart={weekStart}
+            userId={userId}
             onActivityUpdate={() => this.updateActivities()}
           />
         </main>

@@ -46,7 +46,7 @@ class SignIn extends Component {
             className="signin-input"
             type="text"
             name="email"
-            placeholder="email"
+            placeholder="Email"
             value={email}
             onChange={this.onChangeText}
           />

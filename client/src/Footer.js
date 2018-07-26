@@ -4,7 +4,7 @@ class Footer extends Component {
   render() {
     return (
       <footer>
-        <p className="copyright">Saint Vincent College Opportunity/ACT101/SSS-TRiO Program</p>
+        <p className="copyright">Saint Vincent College Opportunity/ACT101/SSS-TRIO Program</p>
       </footer>
     );
   }

@@ -28,6 +28,10 @@ class Admin extends Component {
     this.props.validUserRole('')
     this.props.history.push('/');
   }
+
+  changeOfWeek = (shift) => {
+    this.props.onWeekChange(shift)
+  }
   
   render() {
     const { userData } = this.state
@@ -39,6 +43,7 @@ class Admin extends Component {
           userData={userData}
           weekStart={weekStart}
           userRole={userRole}
+          onWeekChange={(shift) => this.changeOfWeek(shift)}
         />
 
       </div>
