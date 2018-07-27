@@ -9,7 +9,7 @@ class SignUp extends Component {
     email: '',
     password: '',
     verifyPassword: '',
-    error: '',
+    error: [],
     userList: []
   }
 
@@ -34,11 +34,23 @@ class SignUp extends Component {
 
   submitUser = (e) => {
     e.preventDefault();
-    const { fname, lname, email, password, verifyPassword, userList } = this.state;
+    const { fname, lname, email, password, verifyPassword, userList, error } = this.state;
+    if (error.length > 0) {
+      this.setState({ error: [] })
+    }
+    let errorMessages = []
     if (!fname || !lname || !email || !password || !verifyPassword) return;
-    if (userList.map(user => user.email).includes(email)) return;
-    if (password !== verifyPassword) return;
-    this.submitNewUser();
+    if (userList.map(user => user.email).includes(email)) {
+      errorMessages.push('That email address is already taken.')
+    };
+    if (password !== verifyPassword) {
+      errorMessages.push('Your passwords do not match.')
+    };
+    if(errorMessages.length > 0) {
+      this.setState({ error: errorMessages })
+    } else {
+      this.submitNewUser();
+    }
   }
 
   submitNewUser = () => {
@@ -50,18 +62,25 @@ class SignUp extends Component {
     }).then(res => res.json()).then((res) => {
       if (!res.success) {this.setState({ error: res.error.message || res.error });}
       else {
-        this.setState({ fname: '', lname: '', email: '', password: '', verifyPassword: '', error: null });
+        this.setState({ fname: '', lname: '', email: '', password: '', verifyPassword: '', error: [] });
         this.props.history.push('/');
       }
     });
   }
 
   render() {
-    const { fname, lname, email, password, verifyPassword } = this.state
+    const { fname, lname, email, password, verifyPassword, error } = this.state
     const { userRole } = this.props
+    if (error.length > 0) {
+      const messages = document.querySelector('.messages');
+      messages.classList.add('error-alert');
+      messages.innerHTML = error.map(err => `<p class="error-message">${err}</p>`).join('');
+    }
 
     return (
-      <div>
+      <div className="signup-page-container">
+        <div className="messages">
+        </div>
         {!userRole &&
         <UserForm
           fname={fname}

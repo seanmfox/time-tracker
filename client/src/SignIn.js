@@ -4,7 +4,7 @@ class SignIn extends Component {
   state = {
     email: '',
     password: '',
-    error: ''
+    error: null
   }
 
   signInUser = (e) => {
@@ -26,7 +26,6 @@ class SignIn extends Component {
         localStorage.userId = res.userId
         localStorage.userRole = res.userRole
         this.props.setUserRole(res.userRole)
-        // this.setState({ email: '', password: '', error: null })
       };
     });
   }
@@ -38,28 +37,42 @@ class SignIn extends Component {
   }
 
   render() {
-    const { email, password } = this.state
+    const { email, password, error } = this.state
+    if (error) {
+      const messages = document.querySelector('.messages');
+      messages.classList.add('error-alert');
+      messages.innerHTML = `<p class="error-message">${error}<p>`;
+    }
 
     return (
+      <div className="signin-form-container">
+        <div className="messages">
+
+        </div>
         <form className="signin-form" onSubmit={(e) => this.signInUser(e)}>
           <input
+            id="signin-email-input"
             className="signin-input"
             type="text"
             name="email"
             placeholder="Email"
             value={email}
             onChange={this.onChangeText}
+            required
           />
           <input
+            id="signin-password-input"
             className="signin-input"
             type="password"
             name="password"
             placeholder="Password"
             value={password}
             onChange={this.onChangeText}
+            required
           />
           <button type="submit" className="full-width-button">Log In</button>
         </form>
+      </div>
     );
   }
 }

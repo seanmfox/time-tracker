@@ -18,11 +18,20 @@ class WeeklyRecap extends Component {
       <div className="weekly-recap">
         <h2 className="weekly-recap-heading">Weekly Recap{userRole === 'admin' && <span> - {weekBeginningDate} - {weekEndDate}</span>}</h2>
         <hr/>
+        <table className="recap-table">
+          <tbody>
+            <tr>
+              <th>Type</th>
+              <th>Total Duration</th>
+            </tr>
         {activitiesTypeList.map(type => (
-          <div className="type-recap" key={type}>
-            <span className="type-name">{type} - </span><span className="type-duration">{weeklyActivityList.filter(activity => activity.activityType === type).reduce((acc, curr) => acc + curr.time, 0)} hours</span>
-          </div>
+          <tr className="type-recap" key={type}>
+            <td className="type-name">{type}</td>
+            <td className="type-duration">{weeklyActivityList.filter(activity => activity.activityType === type).reduce((acc, curr) => acc + curr.time, 0)} hours</td>
+          </tr>
         ))}
+        </tbody>
+        </table>
       </div>
     );
   }

@@ -62,7 +62,7 @@ router.post('/usersignin/', (req, res) => {
   User.findOne({ email: email}, (err, doc) => {
     if (err) return res.json({ success: false, error: err });
     return bcrypt.compare(password, doc.password).then((response) => {
-      if (!response) return res.json({ success: false, error: 'Incorrect password'})
+      if (!response) return res.json({ success: false, error: 'The email or password do not match.  Please try again.'})
       return res.json({ success: true, validUser: true, userRole: doc.userRole, userId: doc._id, fname: doc.fname, lname: doc.lname });  
     })
   })

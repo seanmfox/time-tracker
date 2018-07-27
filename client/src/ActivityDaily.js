@@ -20,17 +20,48 @@ class ActivityDaily extends Component {
     });
   }
 
+  timeOutput = (time) => {
+    const dbTime = Number(time)
+    if (dbTime < 1) {
+      return `${(dbTime * 60)} mins`
+    } else if (dbTime === 1) {
+      return '1 hr'
+    } else if (dbTime % 1 === 0) {
+      return `${dbTime} hrs`
+    } else {
+      const parsedTime = dbTime.toString().split('.')
+      const hours = Number(parsedTime[0])
+      const minutes = Number(`.${parsedTime[1]}`) * 60
+      if (hours === 1) {
+        return `1 hr, ${minutes} mins`
+      } else {
+        return `${hours} hrs, ${minutes} mins`
+      }
+    }
+  }
+
   render() {
     const { dailyActivities, userRole } = this.props
 
     return (
       <div className="day-body">
+      <table className="day-table">
+        <tbody>
+        {dailyActivities.length > 0 && <tr>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Duration</th>
+        </tr>}
         {dailyActivities.map(activity => (
-          <div key={activity._id} className="activity">
-            <p>{activity.description} {activity.activityType} {activity.time}</p>
-            {!userRole && <button onClick={() => this.deleteActivity(activity._id)}>Delete</button>}
-          </div>
+          <tr key={activity._id} className="activity">
+            <td>{activity.description}</td>
+            <td>{activity.activityType}</td> 
+            <td>{this.timeOutput(activity.time)}</td> 
+            <td>{!userRole && <button onClick={() => this.deleteActivity(activity._id)} className="del-btn"><i className="fas fa-trash-alt"></i></button>}</td>
+          </tr>
         ))}
+        </tbody>
+        </table>
       </div>
     );
   }

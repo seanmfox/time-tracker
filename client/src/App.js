@@ -12,7 +12,7 @@ import Admin from './Admin';
 class App extends Component {
   state = {
     userRole: '',
-    error: '',
+    error: null,
     weekStart: ''
   }
 

@@ -28,6 +28,8 @@ header h1 {
   padding-top: 10px;
 }
 
+
+/* Signin Page */
 .signin-page-container {
   text-align: center;
   margin-bottom: 60px;
@@ -46,8 +48,37 @@ header h1 {
   width: 100%;
 }
 
+/* Signup Page */
+
+.signup-page-container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.user-signup-form-container {
+  padding: 20px;
+}
+
+.user-signup-form input {
+  display: block;
+  width: 100%;
+}
+
+/* Error message handling */
+
+.messages {
+  display: none;
+}
+
+.error-alert {
+  display: block;
+}
+
+/* Week Content component */
+
 .week-content {
   padding-bottom: 60px;
+  margin: 5px 10px;
 }
 
 .activity-nav {
@@ -62,6 +93,8 @@ header h1 {
   padding: 6px 12px;
   border-radius: 5px;
 }
+
+/* Activity Form */
 
 .activity-form-container {
   background-color: white;
@@ -84,10 +117,6 @@ header h1 {
 
 .date-input {
   margin-left: 86px;
-}
-
-.week-content {
-  margin: 5px 20px;
 }
 
 .week-change-buttons {
@@ -122,9 +151,22 @@ header h1 {
   width: 100%;
 }
 
+.del-btn {
+  background: none;
+  border: none;
+}
+
 .day-header {
   margin: 0;
 }
+
+.day-table, .recap-table {
+  width: 100%;
+  text-align: left;
+  font-size: 15px;
+}
+
+
 
 .activity-form label {
   display: block;
@@ -168,12 +210,16 @@ footer {
     margin: 0 auto;
   }
 
-  .signin-page-container {
+  .signin-page-container, .signup-page-container {
     width: 400px;
     margin: 0 auto;
   }
 
   .activity-nav button {
     margin: 8px auto;
+  }
+
+  .day-table, .recap-table {
+    font-size: 22px;
   }
 }

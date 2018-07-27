@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 class ActivityForm extends Component {
   state = {
-    hour: 0,
-    minute: 0,
+    hour: '',
+    minute: '',
     activityType: 'Academics',
     error: null,
     description: ''
@@ -12,6 +12,7 @@ class ActivityForm extends Component {
   submitForm = (e) => {
     e.preventDefault()
     const { activityType, hour, minute, description } = this.state
+    if (hour === 0 && minute === 0) return;
     const time = Number(hour) + (Math.round((Number(minute) / 60) * 100) / 100) 
     const date = document.querySelector('.date-input').value
     if (!activityType || !time || !date || !description) return;
@@ -27,7 +28,7 @@ class ActivityForm extends Component {
     }).then(res => res.json()).then((res) => {
       if (!res.success) {this.setState({ error: res.error.message || res.error });}
       else {
-        this.setState({ activityType: 'Class', hour: 0, minute: 0, error: null, description: '' });
+        this.setState({ activityType: 'Class', hour: '', minute: '', error: null, description: '' });
         this.props.onActivityUpdate();
       }
     });
@@ -58,7 +59,7 @@ class ActivityForm extends Component {
       <div className="activity-form-container closed">
         <form onSubmit={this.submitForm} className="activity-form">
           <label>Description
-            <input value={description} type='text' name='description' onChange={this.onChangeText} className="description-input" required/>
+            <input value={description} type='text' name='description' onChange={this.onChangeText} className="description-input" maxLength="14" required/>
           </label>
           <label>Activity Type
             <select className='type-input' name='activityType' value={activityType} onChange={this.handleSelectChange} required>
@@ -71,8 +72,8 @@ class ActivityForm extends Component {
             </select>
           </label>
           <label>Activity Duration
-            <input value={hour !== 0 && hour} type='number' name='hour' onChange={this.onChangeTime} className="duration-input" placeholder="hours" required/>
-            <input value={minute !== 0 && minute} type='number' name='minute' onChange={this.onChangeTime} className="duration-input" placeholder="minutes" required/>
+            <input value={hour} type='number' name='hour' onChange={this.onChangeTime} className="duration-input" placeholder="hours"/>
+            <input value={minute} type='number' name='minute' onChange={this.onChangeTime} className="duration-input" placeholder="minutes"/>
           </label>
           <label>Date
             <input type='date' name='date-input' className='date-input' required/>
