@@ -15,6 +15,20 @@ html, body {
   position: relative;
 }
 
+button {
+  font-family: 'Righteous', cursive;
+}
+
+h2 {
+  color: darkgreen;
+}
+
+td, th {
+  padding: 4px;
+}
+
+/* Header */
+
 header {
   text-align: center;
   background-color: green;
@@ -51,8 +65,11 @@ header h1 {
 /* Signup Page */
 
 .signup-page-container {
-  margin: 0 auto;
   text-align: center;
+  margin: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .user-signup-form-container {
@@ -62,6 +79,12 @@ header h1 {
 .user-signup-form input {
   display: block;
   width: 100%;
+}
+
+.signup-text {
+  margin: 0;
+  background-color: blue;
+  color: white;
 }
 
 /* Error message handling */
@@ -92,6 +115,12 @@ header h1 {
   font-weight: 400;
   padding: 6px 12px;
   border-radius: 5px;
+}
+
+.activity-nav > button {
+  background-color: yellow;
+  border: none;
+  font-family: 'Righteous', cursive;
 }
 
 /* Activity Form */
@@ -125,6 +154,11 @@ header h1 {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+}
+
+.week-change-buttons button {
+  color: yellow;
+  background-color: darkgreen;
 }
 
 .weekly-recap {
@@ -164,9 +198,19 @@ header h1 {
   width: 100%;
   text-align: left;
   font-size: 15px;
+  border-collapse: collapse;
+
 }
 
+.table-header-row {
+  color: yellow;
+  background-color: darkgreen;
+}
 
+.table-data {
+  border: 1px solid;
+
+}
 
 .activity-form label {
   display: block;
@@ -195,15 +239,12 @@ footer {
   padding-top: 10px;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1000px) {
 
   .activity-form-container {
     width: 300px;
     margin: 0 auto;
   }
-}
-
-@media screen and (min-width: 1000px) {
 
   .week-content, .admin {
     width: 700px;
@@ -212,11 +253,15 @@ footer {
 
   .signin-page-container, .signup-page-container {
     width: 400px;
-    margin: 0 auto;
+    margin: 20px auto;
   }
 
   .activity-nav button {
     margin: 8px auto;
+  }
+
+  .week-change-buttons button {
+    font-size: 20px;
   }
 
   .day-table, .recap-table {

@@ -47,10 +47,11 @@ class ActivityDaily extends Component {
       <div className="day-body">
       <table className="day-table">
         <tbody>
-        {dailyActivities.length > 0 && <tr>
-          <th>Description</th>
-          <th>Type</th>
-          <th>Duration</th>
+        {dailyActivities.length > 0 &&
+        <tr className="table-header-row">
+          <th className="table-data">Description</th>
+          <th className="table-data">Type</th>
+          <th className="table-data">Duration</th>
         </tr>}
         {dailyActivities.map(activity => (
           <tr key={activity._id} className="activity">

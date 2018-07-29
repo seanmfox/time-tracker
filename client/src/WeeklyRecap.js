@@ -20,9 +20,9 @@ class WeeklyRecap extends Component {
         <hr/>
         <table className="recap-table">
           <tbody>
-            <tr>
-              <th>Type</th>
-              <th>Total Duration</th>
+            <tr className="table-header-row">
+              <th className="table-data">Type</th>
+              <th className="table-data">Total Duration</th>
             </tr>
         {activitiesTypeList.map(type => (
           <tr className="type-recap" key={type}>

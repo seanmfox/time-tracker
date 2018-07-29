@@ -79,6 +79,7 @@ class SignUp extends Component {
 
     return (
       <div className="signup-page-container">
+        <h2 className="signup-text">Join Time Tracker Today</h2>
         <div className="messages">
         </div>
         {!userRole &&

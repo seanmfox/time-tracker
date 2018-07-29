@@ -45,7 +45,7 @@ const UserForm = props => (
         required
       />
 
-      <button type="submit">Create New User</button>
+      <button type="submit">Sign Up</button>
     </form>
   </div>
 );
