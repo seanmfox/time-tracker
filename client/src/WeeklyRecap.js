@@ -7,6 +7,26 @@ class WeeklyRecap extends Component {
     return currentWeekActivities
   }
 
+  timeOutput = (time) => {
+    const dbTime = Number(time)
+    if (dbTime < 1) {
+      return `${(dbTime * 60)} mins`
+    } else if (dbTime === 1) {
+      return '1 hr'
+    } else if (dbTime % 1 === 0) {
+      return `${dbTime} hrs`
+    } else {
+      const parsedTime = dbTime.toString().split('.')
+      const hours = Number(parsedTime[0])
+      const minutes = Number(`.${parsedTime[1]}`) * 60
+      if (hours === 1) {
+        return `1 hr, ${minutes} mins`
+      } else {
+        return `${hours} hrs, ${minutes} mins`
+      }
+    }
+  }
+
   render() {
     const { activities, weekStart, userRole } = this.props
     const weeklyActivityList = this.currentActivities(activities, weekStart)
@@ -27,7 +47,7 @@ class WeeklyRecap extends Component {
         {activitiesTypeList.map(type => (
           <tr className="type-recap" key={type}>
             <td className="type-name">{type}</td>
-            <td className="type-duration">{weeklyActivityList.filter(activity => activity.activityType === type).reduce((acc, curr) => acc + curr.time, 0)} hours</td>
+            <td className="type-duration">{this.timeOutput(weeklyActivityList.filter(activity => activity.activityType === type).reduce((acc, curr) => acc + curr.time, 0))}</td>
           </tr>
         ))}
         </tbody>
