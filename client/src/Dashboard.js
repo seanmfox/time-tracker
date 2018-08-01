@@ -1,58 +1,65 @@
-import React, { Component } from 'react';
-import 'whatwg-fetch';
-import { withRouter } from 'react-router-dom';
-import ActivityForm from './ActivityForm';
-import WeekContent from './WeekContent';
+import React, { Component } from "react";
+import "whatwg-fetch";
+import { withRouter } from "react-router-dom";
+import ActivityForm from "./ActivityForm";
+import WeekContent from "./WeekContent";
 
 class Dashboard extends Component {
   state = {
-    activities: [],
-  }
+    activities: []
+  };
 
   componentDidMount() {
     this.loadActivitiesFromServer();
   }
 
   loadActivitiesFromServer = () => {
-    const userId = localStorage.getItem('userId')
+    const userId = localStorage.getItem("userId");
     fetch(`/api/activities/${userId}`)
-    .then(data => data.json())
-    .then((res) => {
-      if (!res.success) this.setState({ error: res.error });
-      else this.setState({ activities: res.activities });
-    });
-  }
+      .then(data => data.json())
+      .then(res => {
+        if (!res.success) this.setState({ error: res.error });
+        else this.setState({ activities: res.activities });
+      });
+  };
 
   signOut = () => {
-    localStorage.removeItem('userId')
-    localStorage.removeItem('userRole')
-    this.props.validUserRole('')
-    this.props.history.push('/');
-  }
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userRole");
+    this.props.validUserRole("");
+    this.props.history.push("/");
+  };
 
-  changeOfWeek = (shift) => {
-    this.props.onChangeWeek(shift)
-  }
+  changeOfWeek = shift => {
+    this.props.onChangeWeek(shift);
+  };
 
   updateActivities = () => {
-    this.loadActivitiesFromServer()
-  }
+    this.loadActivitiesFromServer();
+  };
 
   toggleActivityForm = () => {
-    const activityFormContainer = document.querySelector('.activity-form-container')
-    activityFormContainer.classList.toggle('closed')
-  }
+    const activityFormContainer = document.querySelector(
+      ".activity-form-container"
+    );
+    activityFormContainer.classList.toggle("closed");
+  };
 
   render() {
-    const userId = localStorage.getItem('userId')
-    const { activities } = this.state
-    const { weekStart } = this.props
+    const userId = localStorage.getItem("userId");
+    const { activities } = this.state;
+    const { weekStart } = this.props;
 
     return (
       <div className="dashboard">
         <nav className="activity-nav">
-          <button className="activity-form-toggle" onClick={this.toggleActivityForm}>Add Activity <i className="fas fa-caret-down"></i></button>
-          <ActivityForm 
+          <button
+            className="activity-form-toggle"
+            onClick={this.toggleActivityForm}
+          >
+            Add Activity <i className="fas fa-caret-down" />
+          </button>
+          <ActivityForm
             userId={userId}
             activities={activities}
             onActivityUpdate={() => this.updateActivities()}
@@ -61,7 +68,7 @@ class Dashboard extends Component {
         </nav>
         <main className="dashboard-content">
           <WeekContent
-            onWeekChange={(shift) => this.changeOfWeek(shift)}
+            onWeekChange={shift => this.changeOfWeek(shift)}
             activities={activities}
             weekStart={weekStart}
             userId={userId}

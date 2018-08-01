@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const UserForm = props => (
   <div className="user-signup-form-container">
@@ -18,7 +18,7 @@ const UserForm = props => (
         value={props.lname}
         onChange={props.handleChangeText}
         required
-      /> 
+      />
       <input
         className="user-signup-email"
         type="email"

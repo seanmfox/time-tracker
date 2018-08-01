@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class WeekChangeButtons extends Component {
-
-  changeOfWeek = (shift) => {
-    this.props.onWeekChange(shift)
-  }
+  changeOfWeek = shift => {
+    this.props.onWeekChange(shift);
+  };
 
   render() {
     return (
