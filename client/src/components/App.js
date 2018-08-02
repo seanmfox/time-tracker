@@ -4,10 +4,11 @@ import SignUp from "./SignUp";
 import "whatwg-fetch";
 import { Route, Redirect } from "react-router-dom";
 import HomePage from "./HomePage";
-import "./App.css";
+import "../styles/App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Admin from "./Admin";
+import { userAuth } from "../lib/DBAPI";
 
 class App extends Component {
   state = {
@@ -28,8 +29,7 @@ class App extends Component {
   };
 
   authenticateUser = () => {
-    fetch(`/api/authenticateuser/${localStorage.getItem("userId")}`)
-      .then(data => data.json())
+    userAuth()
       .then(res => {
         if (!res.success) this.setState({ error: res.error });
         else this.setState({ userRole: res.userRole });

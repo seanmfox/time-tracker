@@ -3,6 +3,7 @@ import "whatwg-fetch";
 import { withRouter } from "react-router-dom";
 import ActivityForm from "./ActivityForm";
 import WeekContent from "./WeekContent";
+import { loadUserActivities } from "../lib/DBAPI";
 
 class Dashboard extends Component {
   state = {
@@ -15,8 +16,7 @@ class Dashboard extends Component {
 
   loadActivitiesFromServer = () => {
     const userId = localStorage.getItem("userId");
-    fetch(`/api/activities/${userId}`)
-      .then(data => data.json())
+    loadUserActivities(userId)
       .then(res => {
         if (!res.success) this.setState({ error: res.error });
         else this.setState({ activities: res.activities });
@@ -62,9 +62,9 @@ class Dashboard extends Component {
           <ActivityForm
             userId={userId}
             activities={activities}
-            onActivityUpdate={() => this.updateActivities()}
+            onActivityUpdate={this.updateActivities}
           />
-          <button onClick={() => this.signOut()}>Sign Out</button>
+          <button onClick={this.signOut}>Sign Out</button>
         </nav>
         <main className="dashboard-content">
           <WeekContent
@@ -72,7 +72,7 @@ class Dashboard extends Component {
             activities={activities}
             weekStart={weekStart}
             userId={userId}
-            onActivityUpdate={() => this.updateActivities()}
+            onActivityUpdate={this.updateActivities}
           />
         </main>
       </div>

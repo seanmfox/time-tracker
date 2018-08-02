@@ -44,7 +44,7 @@ class ActivityList extends Component {
               <ActivityDaily
                 dailyActivities={day}
                 userId={userId}
-                onActivityDelete={() => this.activityDelete()}
+                onActivityDelete={this.activityDelete}
                 userRole={userRole}
               />
             </div>

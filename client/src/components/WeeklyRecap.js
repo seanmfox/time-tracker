@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { timeOutput } from "../lib/timeOutput"
 
 class WeeklyRecap extends Component {
   currentActivities = (activities, weekStart) => {
@@ -8,26 +9,6 @@ class WeeklyRecap extends Component {
         new Date(activity.date).valueOf() < weekStart + 604800000
     );
     return currentWeekActivities;
-  };
-
-  timeOutput = time => {
-    const dbTime = Number(time);
-    if (dbTime < 1) {
-      return `${dbTime * 60} mins`;
-    } else if (dbTime === 1) {
-      return "1 hr";
-    } else if (dbTime % 1 === 0) {
-      return `${dbTime} hrs`;
-    } else {
-      const parsedTime = dbTime.toString().split(".");
-      const hours = Number(parsedTime[0]);
-      const minutes = Number(`.${parsedTime[1]}`) * 60;
-      if (hours === 1) {
-        return `1 hr, ${minutes} mins`;
-      } else {
-        return `${hours} hrs, ${minutes} mins`;
-      }
-    }
   };
 
   render() {
@@ -67,7 +48,7 @@ class WeeklyRecap extends Component {
               <tr className="type-recap" key={type}>
                 <td className="type-name">{type}</td>
                 <td className="type-duration">
-                  {this.timeOutput(
+                  {timeOutput(
                     weeklyActivityList
                       .filter(activity => activity.activityType === type)
                       .reduce((acc, curr) => acc + curr.time, 0)

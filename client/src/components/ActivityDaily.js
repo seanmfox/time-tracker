@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { timeOutput } from "../lib/timeOutput"
+import { dbRemoveActivity } from "../lib/DBAPI";
 
 class ActivityDaily extends Component {
   state = {
@@ -7,12 +9,7 @@ class ActivityDaily extends Component {
 
   deleteActivity = activityId => {
     const { userId } = this.props;
-    fetch(`/api/activities/${activityId}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId })
-    })
-      .then(res => res.json())
+      dbRemoveActivity(userId, activityId)
       .then(res => {
         if (!res.success) {
           this.setState({ error: res.error.message || res.error });
@@ -20,26 +17,6 @@ class ActivityDaily extends Component {
           this.props.onActivityDelete();
         }
       });
-  };
-
-  timeOutput = time => {
-    const dbTime = Number(time);
-    if (dbTime < 1) {
-      return `${dbTime * 60} mins`;
-    } else if (dbTime === 1) {
-      return "1 hr";
-    } else if (dbTime % 1 === 0) {
-      return `${dbTime} hrs`;
-    } else {
-      const parsedTime = dbTime.toString().split(".");
-      const hours = Number(parsedTime[0]);
-      const minutes = Number(`.${parsedTime[1]}`) * 60;
-      if (hours === 1) {
-        return `1 hr, ${minutes} mins`;
-      } else {
-        return `${hours} hrs, ${minutes} mins`;
-      }
-    }
   };
 
   render() {
@@ -60,7 +37,7 @@ class ActivityDaily extends Component {
               <tr key={activity._id} className="activity">
                 <td>{activity.description}</td>
                 <td>{activity.activityType}</td>
-                <td>{this.timeOutput(activity.time)}</td>
+                <td>{timeOutput(activity.time)}</td>
                 <td>
                   {!userRole && (
                     <button

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { createNewActivity } from "../lib/DBAPI";
 
 class ActivityForm extends Component {
   state = {
@@ -26,18 +27,13 @@ class ActivityForm extends Component {
 
   submitNewActivity = (activityType, time, description, date) => {
     const { userId } = this.props;
-    fetch("/api/activities", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ activityType, time, userId, date, description })
-    })
-      .then(res => res.json())
+    createNewActivity(activityType, time, userId, date, description)
       .then(res => {
         if (!res.success) {
           this.setState({ error: res.error.message || res.error });
         } else {
           this.setState({
-            activityType: "Class",
+            activityType: "Academics",
             hour: "",
             minute: "",
             error: null,

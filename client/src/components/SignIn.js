@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { userSignIn } from "../lib/DBAPI";
 
 class SignIn extends Component {
   state = {
@@ -16,12 +17,7 @@ class SignIn extends Component {
 
   newSignIn = () => {
     const { email, password } = this.state;
-    fetch("/api/usersignin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    })
-      .then(res => res.json())
+    userSignIn(email, password)
       .then(res => {
         if (!res.success)
           this.setState({ error: res.error.message || res.error });

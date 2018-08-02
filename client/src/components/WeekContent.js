@@ -28,7 +28,7 @@ class WeekContent extends Component {
           userRole={userRole}
           activities={activities}
           weekStart={weekStart}
-          onActivityUpdate={() => this.updateActivities()}
+          onActivityUpdate={this.updateActivities}
         />
       </div>
     );

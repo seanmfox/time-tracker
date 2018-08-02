@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserForm from "./UserForm";
 import { withRouter } from "react-router-dom";
+import { loadUserList, createNewUser } from "../lib/DBAPI";
 
 class SignUp extends Component {
   state = {
@@ -18,8 +19,7 @@ class SignUp extends Component {
   }
 
   loadUsersFromServer = () => {
-    fetch("/api/users/")
-      .then(data => data.json())
+    loadUserList()
       .then(res => {
         if (!res.success) this.setState({ error: res.error });
         else this.setState({ userList: res.userList });
@@ -63,12 +63,7 @@ class SignUp extends Component {
 
   submitNewUser = () => {
     const { fname, lname, email, password } = this.state;
-    fetch("/api/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fname, lname, email, password })
-    })
-      .then(res => res.json())
+      createNewUser(fname, lname, email, password)
       .then(res => {
         if (!res.success) {
           this.setState({ error: res.error.message || res.error });
