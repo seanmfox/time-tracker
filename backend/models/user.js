@@ -10,7 +10,7 @@ const Activity = new Schema({
   description: String
 });
 
-const UsersSchema = new Schema(
+const UserSchema = new Schema(
   {
     fname: String,
     lname: String,
@@ -23,4 +23,4 @@ const UsersSchema = new Schema(
 );
 
 // export our module to use in server.js
-module.exports = mongoose.model("User", UsersSchema);
+module.exports = mongoose.model("User", UserSchema);

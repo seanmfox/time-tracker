@@ -1,8 +1,8 @@
 export const dbRemoveActivity = (userId, activityId) =>
-  fetch(`/api/activities/${activityId}`, {
+  fetch(`/api/users/${userId}/activities/${activityId}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId })
+    // body: JSON.stringify({ userId })
   }).then(res => res.json());
 
 export const userData = () => fetch("/api/userdata/").then(data => data.json());
@@ -14,14 +14,14 @@ export const createNewActivity = (
   date,
   description
 ) =>
-  fetch("/api/activities", {
+  fetch(`/api/users/${userId}/activities`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ activityType, time, userId, date, description })
+    body: JSON.stringify({ activityType, time, date, description })
   }).then(res => res.json());
 
 export const loadUserActivities = userId =>
-  fetch(`/api/activities/${userId}`).then(data => data.json());
+  fetch(`/api/users/${userId}/activities`).then(data => data.json());
 
 export const userAuth = () =>
   fetch(`/api/authenticateuser/${localStorage.getItem("userId")}`).then(data =>
