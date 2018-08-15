@@ -25,23 +25,21 @@ class ActivityForm extends Component {
     );
   };
 
-  submitNewActivity = (activityType, time, description, date) => {
+  async submitNewActivity(activityType, time, description, date) {
     const { userId } = this.props;
-    createNewActivity(activityType, time, userId, date, description)
-      .then(res => {
-        if (!res.success) {
-          this.setState({ error: res.error.message || res.error });
-        } else {
-          this.setState({
-            activityType: "Academics",
-            hour: "",
-            minute: "",
-            error: null,
-            description: ""
-          });
-          this.props.onActivityUpdate();
-        }
+    let res = await createNewActivity(activityType, time, userId, date, description)
+    if (!res.success) {
+      this.setState({ error: res.error.message || res.error });
+    } else {
+      this.setState({
+        activityType: "Academics",
+        hour: "",
+        minute: "",
+        error: null,
+        description: ""
       });
+      this.props.onActivityUpdate();
+    }
   };
 
   onChangeText = e => {

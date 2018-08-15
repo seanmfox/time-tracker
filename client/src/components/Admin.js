@@ -13,12 +13,11 @@ class Admin extends Component {
     this.loadUserDataFromServer();
   }
 
-  loadUserDataFromServer = () => {
-    userData().then(res => {
-      if (!res.success) this.setState({ error: res.error });
-      else this.setState({ userData: res.userData });
-    });
-  };
+  async loadUserDataFromServer() {
+    let res = await userData();
+    if (!res.success) this.setState({ error: res.error });
+    else this.setState({ userData: res.userData });
+  }
 
   signOut = () => {
     localStorage.removeItem("userId");

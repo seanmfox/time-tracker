@@ -7,16 +7,14 @@ class ActivityDaily extends Component {
     error: null
   };
 
-  deleteActivity = activityId => {
+  async deleteActivity(activityId) {
     const { userId } = this.props;
-      dbRemoveActivity(userId, activityId)
-      .then(res => {
-        if (!res.success) {
-          this.setState({ error: res.error.message || res.error });
-        } else {
-          this.props.onActivityDelete();
-        }
-      });
+    let res = await dbRemoveActivity(userId, activityId)
+    if (!res.success) {
+      this.setState({ error: res.error.message || res.error });
+    } else {
+      this.props.onActivityDelete();
+    }
   };
 
   render() {

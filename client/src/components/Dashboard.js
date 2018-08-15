@@ -14,14 +14,12 @@ class Dashboard extends Component {
     this.loadActivitiesFromServer();
   }
 
-  loadActivitiesFromServer = () => {
+  async loadActivitiesFromServer() {
     const userId = localStorage.getItem("userId");
-    loadUserActivities(userId)
-      .then(res => {
-        if (!res.success) this.setState({ error: res.error });
-        else this.setState({ activities: res.activities });
-      });
-  };
+    let res = await loadUserActivities(userId);
+    if (!res.success) this.setState({ error: res.error });
+    else this.setState({ activities: res.activities });
+  }
 
   signOut = () => {
     localStorage.removeItem("userId");

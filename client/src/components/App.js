@@ -28,13 +28,11 @@ class App extends Component {
     }
   };
 
-  authenticateUser = () => {
-    userAuth()
-      .then(res => {
-        if (!res.success) this.setState({ error: res.error });
-        else this.setState({ userRole: res.userRole });
-      });
-  };
+  async authenticateUser() {
+    let res = await userAuth();
+    if (!res.success) this.setState({ error: res.error });
+    else this.setState({ userRole: res.userRole });
+  }
 
   setCurrentWeek = () => {
     const currentDate = new Date(Date.now());

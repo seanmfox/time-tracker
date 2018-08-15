@@ -15,19 +15,16 @@ class SignIn extends Component {
     this.newSignIn();
   };
 
-  newSignIn = () => {
+  async newSignIn() {
     const { email, password } = this.state;
-    userSignIn(email, password)
-      .then(res => {
-        if (!res.success)
-          this.setState({ error: res.error.message || res.error });
-        else if (res.userRole) {
-          localStorage.userId = res.userId;
-          localStorage.userRole = res.userRole;
-          this.props.setUserRole(res.userRole);
-        }
-      });
-  };
+    let res = await userSignIn(email, password);
+    if (!res.success) this.setState({ error: res.error.message || res.error });
+    else if (res.userRole) {
+      localStorage.userId = res.userId;
+      localStorage.userRole = res.userRole;
+      this.props.setUserRole(res.userRole);
+    }
+  }
 
   onChangeText = e => {
     const newState = { ...this.state };

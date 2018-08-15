@@ -18,13 +18,11 @@ class SignUp extends Component {
     this.loadUsersFromServer();
   }
 
-  loadUsersFromServer = () => {
-    loadUserList()
-      .then(res => {
-        if (!res.success) this.setState({ error: res.error });
-        else this.setState({ userList: res.userList });
-      });
-  };
+  async loadUsersFromServer() {
+    let res = await loadUserList();
+    if (!res.success) this.setState({ error: res.error });
+    else this.setState({ userList: res.userList });
+  }
 
   onChangeText = e => {
     const newState = { ...this.state };
@@ -61,25 +59,23 @@ class SignUp extends Component {
     }
   };
 
-  submitNewUser = () => {
+  async submitNewUser() {
     const { fname, lname, email, password } = this.state;
-      createNewUser(fname, lname, email, password)
-      .then(res => {
-        if (!res.success) {
-          this.setState({ error: res.error.message || res.error });
-        } else {
-          this.setState({
-            fname: "",
-            lname: "",
-            email: "",
-            password: "",
-            verifyPassword: "",
-            error: []
-          });
-          this.props.history.push("/");
-        }
+    let res = await createNewUser(fname, lname, email, password);
+    if (!res.success) {
+      this.setState({ error: res.error.message || res.error });
+    } else {
+      this.setState({
+        fname: "",
+        lname: "",
+        email: "",
+        password: "",
+        verifyPassword: "",
+        error: []
       });
-  };
+      this.props.history.push("/");
+    }
+  }
 
   render() {
     const { fname, lname, email, password, verifyPassword, error } = this.state;
