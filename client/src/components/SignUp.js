@@ -79,7 +79,7 @@ class SignUp extends Component {
 
   render() {
     const { fname, lname, email, password, verifyPassword, error } = this.state;
-    const { userRole } = this.props;
+    const { user } = this.props;
     if (error.length > 0) {
       const messages = document.querySelector(".messages");
       messages.classList.add("error-alert");
@@ -92,7 +92,7 @@ class SignUp extends Component {
       <div className="signup-page-container">
         <h2 className="signup-text">Join Time Tracker Today</h2>
         <div className="messages" />
-        {!userRole && (
+        {!user.userRole && (
           <UserForm
             fname={fname}
             lname={lname}

@@ -15,16 +15,15 @@ class Dashboard extends Component {
   }
 
   async loadActivitiesFromServer() {
-    const userId = localStorage.getItem("userId");
+    const { userId } = this.props.user ;
     let res = await loadUserActivities(userId);
     if (!res.success) this.setState({ error: res.error });
     else this.setState({ activities: res.activities });
   }
 
   signOut = () => {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("userRole");
-    this.props.validUserRole("");
+    localStorage.removeItem("JWT");
+    this.props.validUser("");
     this.props.history.push("/");
   };
 
@@ -44,9 +43,8 @@ class Dashboard extends Component {
   };
 
   render() {
-    const userId = localStorage.getItem("userId");
     const { activities } = this.state;
-    const { weekStart } = this.props;
+    const { weekStart, user } = this.props;
 
     return (
       <div className="dashboard">
@@ -58,7 +56,7 @@ class Dashboard extends Component {
             Add Activity <i className="fas fa-caret-down" />
           </button>
           <ActivityForm
-            userId={userId}
+            userId={user.userId}
             activities={activities}
             onActivityUpdate={this.updateActivities}
           />
@@ -69,7 +67,7 @@ class Dashboard extends Component {
             onWeekChange={shift => this.changeOfWeek(shift)}
             activities={activities}
             weekStart={weekStart}
-            userId={userId}
+            userId={user.userId}
             onActivityUpdate={this.updateActivities}
           />
         </main>

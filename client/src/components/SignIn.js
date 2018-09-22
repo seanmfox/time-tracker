@@ -20,9 +20,8 @@ class SignIn extends Component {
     let res = await userSignIn(email, password);
     if (!res.success) this.setState({ error: res.error.message || res.error });
     else if (res.userRole) {
-      localStorage.userId = res.userId;
-      localStorage.userRole = res.userRole;
-      this.props.setUserRole(res.userRole);
+      localStorage.JWT = res.token;
+      this.props.setUser(res);
     }
   }
 

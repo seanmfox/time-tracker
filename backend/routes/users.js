@@ -7,7 +7,6 @@ router.route('/')
   .post(userHelpers.createUser);
 
 // List a user's tracked activities
-
 router.route('/:userId/activities')
   .get(userHelpers.getActivities)
   .post(userHelpers.createActivity);

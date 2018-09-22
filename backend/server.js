@@ -4,8 +4,14 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const path = require("path");
-const userRoutes = require('./routes/users');
+const userRoutes = require("./routes/users");
 const User = require("./models").User;
+const jwt = require("jsonwebtoken");
+const {
+  loginRequired,
+  ensureCorrectUser,
+  adminOnlyData
+} = require("./middleware/auth");
 
 // and create our instances
 require("dotenv").config();
@@ -24,6 +30,7 @@ app.use(bodyParser.json());
 app.use(logger("dev"));
 
 // Get all user data from the database
+app.use("/api/userdata", loginRequired, adminOnlyData);
 router.get("/userdata", (req, res) => {
   User.find({ userRole: "student" }, "-password", (err, users) => {
     if (err) return res.json({ success: false, error: err });
@@ -41,7 +48,7 @@ router.post("/usersignin/", (req, res) => {
       error: "You must provide a email and password"
     });
   }
-  User.findOne({ email: email }, (err, doc) => {
+  User.findOne({ email: email.toLowerCase() }, (err, doc) => {
     if (!doc)
       return res.json({
         success: false,
@@ -54,6 +61,17 @@ router.post("/usersignin/", (req, res) => {
           error: "The email or password do not match.  Please try again."
         });
       return res.json({
+        token: jwt.sign(
+          {
+            success: true,
+            validUser: true,
+            userRole: doc.userRole,
+            userId: doc._id,
+            fname: doc.fname,
+            lname: doc.lname
+          },
+          process.env.SECRET_KEY
+        ),
         success: true,
         validUser: true,
         userRole: doc.userRole,
@@ -66,15 +84,25 @@ router.post("/usersignin/", (req, res) => {
 });
 
 //Authenticate user if already signed in
-router.get("/authenticateuser/:userId", (req, res) => {
-  const { userId } = req.params;
-  User.findById(userId, (err, user) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, userRole: user.userRole });
+router.get("/authenticateuser", (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    User.findById(decoded.userId, (err, user) => {
+      if (err) return res.json({ success: false, error: err });
+      return res.json({
+        success: true,
+        validUser: true,
+        userRole: user.userRole,
+        userId: user._id,
+        fname: user.fname,
+        lname: user.lname
+      });
+    });
   });
 });
 
 // Use our router configuration when we call /api
+app.use("/api/users/:userId/activities", loginRequired, ensureCorrectUser);
 app.use("/api", router);
 app.use("/api/users", userRoutes);
 

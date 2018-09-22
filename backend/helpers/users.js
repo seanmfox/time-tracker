@@ -25,7 +25,7 @@ exports.createUser = (req, res) => {
   bcrypt.hash(password, 10).then(hash => {
     user.fname = fname;
     user.lname = lname;
-    user.email = email;
+    user.email = email.toLowerCase();
     user.password = hash;
     user.save(err => {
       if (err) return res.json({ success: false, error: err });

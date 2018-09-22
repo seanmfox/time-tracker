@@ -20,9 +20,8 @@ class Admin extends Component {
   }
 
   signOut = () => {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("userRole");
-    this.props.validUserRole("");
+    localStorage.removeItem("JWT");
+    this.props.validUser("");
     this.props.history.push("/");
   };
 
