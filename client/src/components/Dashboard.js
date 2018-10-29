@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import ActivityForm from "./ActivityForm";
 import WeekContent from "./WeekContent";
 import { loadUserActivities } from "../lib/DBAPI";
+import SettingsNav from "./SettingsNav";
 
 class Dashboard extends Component {
   state = {
@@ -15,7 +16,7 @@ class Dashboard extends Component {
   }
 
   async loadActivitiesFromServer() {
-    const { userId } = this.props.user ;
+    const { userId } = this.props.user;
     let res = await loadUserActivities(userId);
     if (!res.success) this.setState({ error: res.error });
     else this.setState({ activities: res.activities });
@@ -35,13 +36,6 @@ class Dashboard extends Component {
     this.loadActivitiesFromServer();
   };
 
-  toggleActivityForm = () => {
-    const activityFormContainer = document.querySelector(
-      ".activity-form-container"
-    );
-    activityFormContainer.classList.toggle("closed");
-  };
-
   render() {
     const { activities } = this.state;
     const { weekStart, user } = this.props;
@@ -49,18 +43,21 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
         <nav className="activity-nav">
-          <button
-            className="activity-form-toggle"
-            onClick={this.toggleActivityForm}
-          >
-            Add Activity <i className="fas fa-caret-down" />
-          </button>
-          <ActivityForm
-            userId={user.userId}
-            activities={activities}
-            onActivityUpdate={this.updateActivities}
-          />
-          <button onClick={this.signOut}>Sign Out</button>
+          <ul>
+            <li>
+              <ActivityForm
+                userId={user.userId}
+                activities={activities}
+                onActivityUpdate={this.updateActivities}
+              />
+            </li>
+            <li>
+              <SettingsNav 
+                onSignOut={this.signOut} 
+                user={user}
+              />
+            </li>
+          </ul>
         </nav>
         <main className="dashboard-content">
           <WeekContent

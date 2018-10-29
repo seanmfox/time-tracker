@@ -27,7 +27,13 @@ class ActivityForm extends Component {
 
   async submitNewActivity(activityType, time, description, date) {
     const { userId } = this.props;
-    let res = await createNewActivity(activityType, time, userId, date, description)
+    let res = await createNewActivity(
+      activityType,
+      time,
+      userId,
+      date,
+      description
+    );
     if (!res.success) {
       this.setState({ error: res.error.message || res.error });
     } else {
@@ -40,7 +46,7 @@ class ActivityForm extends Component {
       });
       this.props.onActivityUpdate();
     }
-  };
+  }
 
   onChangeText = e => {
     const newState = { ...this.state };
@@ -60,74 +66,89 @@ class ActivityForm extends Component {
     this.setState(newState);
   };
 
+  toggleActivityForm = () => {
+    const activityFormContainer = document.querySelector(
+      ".activity-form-container"
+    );
+    activityFormContainer.classList.toggle("closed");
+  };
+
   render() {
     const { hour, minute, activityType, description } = this.state;
 
     return (
-      <div className="activity-form-container closed">
-        <form onSubmit={this.submitForm} className="activity-form">
-          <label>
-            Description
-            <input
-              value={description}
-              type="text"
-              name="description"
-              onChange={this.onChangeText}
-              className="description-input"
-              maxLength="14"
-              required
-            />
-          </label>
-          <label>
-            Activity Type
-            <select
-              className="type-input"
-              name="activityType"
-              value={activityType}
-              onChange={this.handleSelectChange}
-              required
-            >
-              <option value="Academics">Academics</option>
-              <option value="Athletics">Athletics</option>
-              <option value="Studying">Studying</option>
-              <option value="Work">Work</option>
-              <option value="Socializing">Socializing</option>
-              <option value="Other">Other</option>
-            </select>
-          </label>
-          <label>
-            Activity Duration
-            <input
-              value={hour}
-              type="number"
-              name="hour"
-              onChange={this.onChangeTime}
-              className="duration-input"
-              placeholder="hours"
-            />
-            <input
-              value={minute}
-              type="number"
-              name="minute"
-              onChange={this.onChangeTime}
-              className="duration-input"
-              placeholder="minutes"
-            />
-          </label>
-          <label>
-            Date
-            <input
-              type="date"
-              name="date-input"
-              className="date-input"
-              required
-            />
-          </label>
-          <button type="submit" className="activity-submit">
-            Submit Activity
-          </button>
-        </form>
-      </div>
+      <React.Fragment>
+        <button
+          className="activity-form-toggle dropdown-button"
+          onClick={this.toggleActivityForm}
+        >
+          Add Activity <i className="fas fa-caret-down" />
+        </button>
+        <div className="activity-form-container dropdown closed">
+          <form onSubmit={this.submitForm} className="activity-form">
+            <label>
+              Description
+              <input
+                value={description}
+                type="text"
+                name="description"
+                onChange={this.onChangeText}
+                className="description-input"
+                maxLength="14"
+                required
+              />
+            </label>
+            <label>
+              Activity Type
+              <select
+                className="type-input"
+                name="activityType"
+                value={activityType}
+                onChange={this.handleSelectChange}
+                required
+              >
+                <option value="Academics">Academics</option>
+                <option value="Athletics">Athletics</option>
+                <option value="Studying">Studying</option>
+                <option value="Work">Work</option>
+                <option value="Socializing">Socializing</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+            <label>
+              Activity Duration
+              <input
+                value={hour}
+                type="number"
+                name="hour"
+                onChange={this.onChangeTime}
+                className="duration-input"
+                placeholder="hours"
+              />
+              <input
+                value={minute}
+                type="number"
+                name="minute"
+                onChange={this.onChangeTime}
+                className="duration-input"
+                placeholder="minutes"
+              />
+            </label>
+            <label>
+              Date
+              <input
+                type="date"
+                name="date-input"
+                className="date-input"
+                required
+              />
+            </label>
+            <button type="submit" className="activity-submit">
+              Submit Activity
+            </button>
+          </form>
+        </div>
+      </React.Fragment>
     );
   }
 }

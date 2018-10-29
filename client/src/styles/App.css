@@ -15,7 +15,7 @@ html, body {
   position: relative;
 }
 
-button {
+.dropdown-button {
   font-family: 'Righteous', cursive;
 }
 
@@ -109,15 +109,21 @@ header h1 {
   padding: 8px 15px;
 }
 
-.activity-nav button {
+.activity-nav > ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 0;
+  margin: 0;
+}
+
+.dropdown-button {
   display: block;
   margin: 8px 0;
   font-weight: 400;
   padding: 6px 12px;
   border-radius: 5px;
-}
-
-.activity-nav > button {
   background-color: yellow;
   border: none;
   font-family: 'Righteous', cursive;
@@ -125,10 +131,44 @@ header h1 {
 
 /* Activity Form */
 
-.activity-form-container {
+.dropdown {
   background-color: white;
   border-radius: 5px;
   padding: 10px;
+  position: absolute;
+  box-shadow: 1px 1px 10px 2px grey;
+}
+
+.activity-form-container {
+  left: 0;
+  right: auto;
+  margin-left: 15px;
+}
+
+.settings-nav-container {
+  left: auto;
+  right: 0;
+  margin-right: 15px;
+}
+
+.settings-nav-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.settings-nav-container a {
+  color: black;
+  text-decoration: none;
+}
+
+.signout-button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  font-family: sans-serif;
+  font-size: inherit;
 }
 
 .description-input {
@@ -216,7 +256,7 @@ header h1 {
   display: block;
 }
 
-.activity-form-container.closed {
+.dropdown.closed {
   display: none;
 }
 
@@ -241,9 +281,24 @@ footer {
 
 @media screen and (min-width: 1000px) {
 
+  .activity-nav > ul {
+    justify-content: flex-end;
+    margin: 0 auto;
+    width: 700px;
+  }
+
+  .dropdown {
+    left: inherit;
+    right: inherit;
+    margin: 0 0 4px 10px;
+  }
+
+  .dropdown-button {
+    margin: 0 0 4px 10px;
+  }
+  
   .activity-form-container {
     width: 300px;
-    margin: 0 auto;
   }
 
   .week-content, .admin {
@@ -254,10 +309,6 @@ footer {
   .signin-page-container, .signup-page-container {
     width: 400px;
     margin: 20px auto;
-  }
-
-  .activity-nav button {
-    margin: 8px auto;
   }
 
   .week-change-buttons button {
