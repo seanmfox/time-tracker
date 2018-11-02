@@ -64,7 +64,7 @@ header h1 {
 
 /* Signup Page */
 
-.signup-page-container {
+.signup-page-container, .settings-page-container {
   text-align: center;
   margin: 10px;
   border: 1px solid;
@@ -72,11 +72,11 @@ header h1 {
   overflow: hidden;
 }
 
-.user-signup-form-container {
+.user-signup-form-container, .user-update-form {
   padding: 20px;
 }
 
-.user-signup-form input {
+.user-signup-form input, .user-update-form input {
   display: block;
   width: 100%;
 }
@@ -301,12 +301,12 @@ footer {
     width: 300px;
   }
 
-  .week-content, .admin {
+  .week-content, .admin-content {
     width: 700px;
     margin: 0 auto;
   }
 
-  .signin-page-container, .signup-page-container {
+  .signin-page-container, .signup-page-container, .settings-page-container {
     width: 400px;
     margin: 20px auto;
   }

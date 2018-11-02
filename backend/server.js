@@ -68,7 +68,8 @@ router.post("/usersignin/", (req, res) => {
             userRole: doc.userRole,
             userId: doc._id,
             fname: doc.fname,
-            lname: doc.lname
+            lname: doc.lname,
+            email: doc.email
           },
           process.env.SECRET_KEY
         ),
@@ -77,7 +78,8 @@ router.post("/usersignin/", (req, res) => {
         userRole: doc.userRole,
         userId: doc._id,
         fname: doc.fname,
-        lname: doc.lname
+        lname: doc.lname,
+        email: doc.email
       });
     });
   });
@@ -95,7 +97,8 @@ router.get("/authenticateuser", (req, res) => {
         userRole: user.userRole,
         userId: user._id,
         fname: user.fname,
-        lname: user.lname
+        lname: user.lname,
+        email: user.email
       });
     });
   });

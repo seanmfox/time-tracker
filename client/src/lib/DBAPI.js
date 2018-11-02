@@ -1,14 +1,20 @@
 export async function dbRemoveActivity(userId, activityId) {
   return fetch(`/api/users/${userId}/activities/${activityId}`, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("JWT")}` }
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("JWT")}`
+    }
   }).then(res => res.json());
 }
 
 export async function userData() {
   return fetch("/api/userdata/", {
     method: "GET",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("JWT")}` }
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("JWT")}`
+    }
   }).then(data => data.json());
 }
 
@@ -21,7 +27,10 @@ export async function createNewActivity(
 ) {
   return fetch(`/api/users/${userId}/activities`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("JWT")}` },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("JWT")}`
+    },
     body: JSON.stringify({ activityType, time, date, description })
   }).then(res => res.json());
 }
@@ -29,17 +38,21 @@ export async function createNewActivity(
 export async function loadUserActivities(userId) {
   return fetch(`/api/users/${userId}/activities`, {
     method: "GET",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("JWT")}` }
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("JWT")}`
+    }
   }).then(data => data.json());
 }
 
 export async function userAuth() {
   return fetch(`/api/authenticateuser`, {
     method: "GET",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("JWT")}` }
-  }).then(
-    data => data.json()
-  );
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("JWT")}`
+    }
+  }).then(data => data.json());
 }
 
 export async function userSignIn(email, password) {
@@ -59,5 +72,16 @@ export async function createNewUser(fname, lname, email, password) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ fname, lname, email, password })
+  }).then(res => res.json());
+}
+
+export async function userUpdate(userId, fname, lname, email, newPassword) {
+  return fetch(`/api/users/${userId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("JWT")}`
+    },
+    body: JSON.stringify({ fname, lname, email, newPassword })
   }).then(res => res.json());
 }

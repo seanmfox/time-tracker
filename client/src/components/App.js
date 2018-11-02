@@ -8,7 +8,7 @@ import "../styles/App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Admin from "./Admin";
-import Settings from "./Settings"
+import Settings from "./Settings";
 import { userAuth } from "../lib/DBAPI";
 
 class App extends Component {
@@ -54,62 +54,68 @@ class App extends Component {
 
   render() {
     const { user, weekStart } = this.state;
-
+    
     return (
       <div className="app">
         <Header />
-        <Route
-          path="/settings"
-          render={() =>
-            Object.keys(localStorage.getItem("JWT")).length > 0 ? <Settings 
-              user={user}/> : <Redirect to="/" />
-          }
-        />
-        <Route
-          exact
-          path="/"
-          render={() =>
-            user.userRole === "admin" ? (
-              <Redirect to="/admin" />
-            ) : user.userRole === "student" ? (
-              <Redirect to="/dashboard" />
-            ) : (
-              <HomePage validUser={user => this.setUser(user)} />
-            )
-          }
-        />
-        <Route
-          path="/admin"
-          render={() =>
-            user.userRole === "admin" ? (
-              <Admin
-                validUser={user => this.setUser(user)}
-                onWeekChange={timeChange => this.changeWeek(timeChange)}
-                weekStart={weekStart}
-                userRole={user.userRole}
-                user={user}
-              />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
-        <Route
-          path="/dashboard"
-          render={() =>
-            user.userRole === "student" ? (
-              <Dashboard
-                validUser={user => this.setUser(user)}
-                onChangeWeek={timeChange => this.changeWeek(timeChange)}
-                weekStart={weekStart}
-                user={user}
-              />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
-        <Route path="/signup" render={() => <SignUp user={user} />} />
+        <div className="page-content">
+          <Route
+            path="/settings"
+            render={() =>
+              user.userRole === "admin" || user.userRole === "student" ? (
+                <Settings validUser={user => this.setUser(user)}
+                />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/"
+            render={() =>
+              user.userRole === "admin" ? (
+                <Redirect to="/admin" />
+              ) : user.userRole === "student" ? (
+                <Redirect to="/dashboard" />
+              ) : (
+                <HomePage validUser={user => this.setUser(user)} />
+              )
+            }
+          />
+          <Route
+            path="/admin"
+            render={() =>
+              user.userRole === "admin" ? (
+                <Admin
+                  validUser={user => this.setUser(user)}
+                  onWeekChange={timeChange => this.changeWeek(timeChange)}
+                  weekStart={weekStart}
+                  userRole={user.userRole}
+                  user={user}
+                />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route
+            path="/dashboard"
+            render={() =>
+              user.userRole === "student" ? (
+                <Dashboard
+                  validUser={user => this.setUser(user)}
+                  onChangeWeek={timeChange => this.changeWeek(timeChange)}
+                  weekStart={weekStart}
+                  user={user}
+                />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route path="/signup" render={() => <SignUp user={user} />} />
+        </div>
         <Footer />
       </div>
     );

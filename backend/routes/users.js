@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const userHelpers = require("../helpers/users");
+const { loginRequired, ensureCorrectUser } = require('../middleware/auth')
 
 router.route('/')
   .get(userHelpers.getUsers)
   .post(userHelpers.createUser);
+
+router.route('/:userId').patch(loginRequired, ensureCorrectUser, userHelpers.updateUser);
 
 // List a user's tracked activities
 router.route('/:userId/activities')
