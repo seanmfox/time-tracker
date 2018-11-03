@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import WeekContent from "./WeekContent";
+import StudentProfile from "./StudentProfile";
 
 class UserList extends Component {
   state = {
@@ -19,6 +20,7 @@ class UserList extends Component {
   render() {
     const { selectedUser } = this.state;
     const { userData, weekStart, userRole } = this.props;
+    const selectedUserData = userData.find(u => u._id === selectedUser)
 
     return (
       <div>
@@ -27,6 +29,7 @@ class UserList extends Component {
             value={selectedUser}
             name="selectedUser"
             onChange={this.handleSelectChange}
+            className="user-select"
           >
             <option />
             {userData.map(user => (
@@ -40,12 +43,13 @@ class UserList extends Component {
         )}
         {selectedUser !== "" && (
           <React.Fragment>
+            <StudentProfile selectedUserData={selectedUserData}/>
             <WeekContent
               userRole={userRole}
               onWeekChange={shift => this.changeOfWeek(shift)}
               weekStart={weekStart}
               activities={
-                userData.find(user => selectedUser === user._id)["activities"]
+                selectedUserData["activities"]
               }
               userId={selectedUser}
             />

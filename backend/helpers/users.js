@@ -117,6 +117,27 @@ exports.updateUser = (req, res) => {
   }
 };
 
+exports.resetPassword = (req, res) => {
+  const { userId } = req.params;
+  const { password } = req.body;
+  if (!password) {
+    // we should throw an error. we can do this check on the front end
+    return res.json({
+      success: false,
+      error: "You must provide a new password"
+    });
+  }
+  bcrypt.hash(password, 10).then(hash => {
+    User.findById(userId, (error, user) => {
+      user.password = hash;
+      user.save(err => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ success: true })
+      })
+    })
+  })
+}
+
 exports.getActivities = (req, res) => {
   const { userId } = req.params;
   User.findById(userId)

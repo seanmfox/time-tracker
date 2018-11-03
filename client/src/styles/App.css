@@ -101,7 +101,8 @@ header h1 {
 
 .week-content {
   padding-bottom: 60px;
-  margin: 5px 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .activity-nav {
@@ -151,7 +152,7 @@ header h1 {
   margin-right: 15px;
 }
 
-.settings-nav-container ul {
+.settings-nav-container ul, .student-profile-container ul {
   list-style: none;
   padding: 0;
 }
@@ -256,13 +257,38 @@ header h1 {
   display: block;
 }
 
-.dropdown.closed {
+.closed {
   display: none;
 }
 
 .activity-submit {
   margin-left: 0;
 }
+
+/* Settings Page */
+.user-update-form {
+  text-align: left;
+}
+
+.user-update-form input {
+  margin-bottom: 15px;
+}
+
+.settings .activity-nav ul, .admin .activity-nav ul {
+  justify-content: flex-end;
+}
+
+/* Admin Page */
+
+.admin-content, .dashboard-content {
+  margin: 10px;
+}
+
+.user-select {
+  margin-bottom: 10px;
+}
+
+/* Footer */
 
 footer {
   text-align: center;

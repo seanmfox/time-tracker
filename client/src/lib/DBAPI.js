@@ -85,3 +85,14 @@ export async function userUpdate(userId, fname, lname, email, newPassword) {
     body: JSON.stringify({ fname, lname, email, newPassword })
   }).then(res => res.json());
 }
+
+export async function updateUserPassword(userId, password) {
+  return fetch(`/api/users/${userId}/resetpassword`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("JWT")}`
+    },
+    body: JSON.stringify({ password })
+  }).then(res => res.json()); 
+}

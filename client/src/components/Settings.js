@@ -134,7 +134,7 @@ class Settings extends Component {
     }
 
     return (
-      <div>
+      <div className="settings">
         <nav className="activity-nav">
           <ul>
             <li>
@@ -143,49 +143,68 @@ class Settings extends Component {
           </ul>
         </nav>
         <div className="settings-page-container">
-        <div className="messages" />
-        <form className="user-update-form" onSubmit={this.submitUser}>
-          <input
-            type="text"
-            name="fname"
-            placeholder="First Name"
-            value={fname}
-            onChange={this.onChangeText}
-            required
-          />
-          <input
-            type="text"
-            name="lname"
-            placeholder="Last Name"
-            value={lname}
-            onChange={this.onChangeText}
-            required
-          />
-          <input
-            className="user-signup-email"
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={this.onChangeText}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={this.onChangeText}
-          />
-          <input
-            type="password"
-            name="verifyPassword"
-            placeholder="Verify password"
-            value={verifyPassword}
-            onChange={this.onChangeText}
-          />
-          <button type="submit">Save Changes</button>
-        </form>
+        <h1>User Settings</h1>
+          <div className="messages" />
+          <form className="user-update-form" onSubmit={this.submitUser}>
+            <label>
+              First Name
+              <input
+                type="text"
+                name="fname"
+                placeholder="First Name"
+                value={fname}
+                onChange={this.onChangeText}
+                required
+              />
+            </label>
+            <label>
+              Last Name
+              <input
+                type="text"
+                name="lname"
+                placeholder="Last Name"
+                value={lname}
+                onChange={this.onChangeText}
+                required
+              />
+            </label>
+            <label>
+              Email
+              <input
+                className="user-signup-email"
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={this.onChangeText}
+                required
+              />
+            </label>
+            <hr/>
+            <sup>Password fields only required if changing password:</sup>
+            <br/>
+            <label>
+              New Password
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={this.onChangeText}
+              />
+            </label>
+            <label>
+              Verify New Password
+              <input
+                type="password"
+                name="verifyPassword"
+                placeholder="Verify password"
+                value={verifyPassword}
+                onChange={this.onChangeText}
+              />
+            </label>
+            <button type="submit">Update Settings</button>
+          </form>
         </div>
       </div>
     );

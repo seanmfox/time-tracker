@@ -13,19 +13,8 @@ class SettingsNav extends Component {
     this.props.onSignOut();
   };
 
-  settingsWindow = () => {
-    const body = document.querySelector('body');
-    const settingDropdown = document.querySelector('.settings-nav-container');
-    body.addEventListener('click', (e) => {
-      if(settingDropdown && !settingDropdown.classList.contains('closed')) {
-        settingDropdown.classList.toggle("closed");
-      }
-    })
-  }
-
   render() {
     const {user} = this.props
-    this.settingsWindow()
 
     return (
       <div>
