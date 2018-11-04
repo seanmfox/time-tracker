@@ -309,7 +309,6 @@ footer {
   text-align: center;
   background-color: green;
   color: yellow;
-  position: absolute;
   bottom: 0;
   width: 100%;
   height: 60px;
@@ -408,5 +407,9 @@ footer {
 
   .day-table, .recap-table {
     font-size: 22px;
+  }
+
+  footer {
+    position: absolute;
   }
 }
