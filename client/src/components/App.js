@@ -15,24 +15,27 @@ class App extends Component {
   state = {
     user: "",
     error: null,
-    weekStart: ""
+    weekStart: "",
+    loading: false
   };
 
   componentDidMount() {
-    this.localStorageUpdate();
     this.setCurrentWeek();
+    this.localStorageUpdate();
   }
 
   localStorageUpdate = () => {
     if (localStorage.getItem("JWT") && this.state.user === "") {
       this.authenticateUser();
+    } else {
+      this.setState({ loading: true })
     }
   };
 
   async authenticateUser() {
     let res = await userAuth();
     if (!res.success) this.setState({ error: res.error });
-    else this.setState({ user: res });
+    else this.setState({ user: res, loading: true });
   }
 
   setCurrentWeek = () => {
@@ -53,17 +56,19 @@ class App extends Component {
   };
 
   render() {
-    const { user, weekStart } = this.state;
+    const { user, weekStart, loading } = this.state;
     
     return (
       <div className="app">
         <Header />
+        { !loading && <div className="loading-bar"></div>}
+        { loading && 
         <div className="page-content">
           <Route
             path="/settings"
             render={() =>
               user.userRole === "admin" || user.userRole === "student" ? (
-                <Settings validUser={user => this.setUser(user)}
+                <Settings user={user} validUser={user => this.setUser(user)}
                 />
               ) : (
                 <Redirect to="/" />
@@ -116,6 +121,7 @@ class App extends Component {
           />
           <Route path="/signup" render={() => <SignUp user={user} />} />
         </div>
+        }
         <Footer />
       </div>
     );

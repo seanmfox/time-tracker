@@ -3,11 +3,13 @@ import { withRouter } from "react-router-dom";
 import UserList from "./UserList";
 import { userData } from "../lib/DBAPI";
 import SettingsNav from "./SettingsNav";
+import LoadingSpinner from "./LoadingSpinner";
 
 class Admin extends Component {
   state = {
     userData: [],
-    error: null
+    error: null,
+    loading: false
   };
 
   componentDidMount() {
@@ -17,7 +19,7 @@ class Admin extends Component {
   async loadUserDataFromServer() {
     let res = await userData();
     if (!res.success) this.setState({ error: res.error });
-    else this.setState({ userData: res.userData });
+    else this.setState({ userData: res.userData, loading: true });
   }
 
   signOut = () => {
@@ -31,7 +33,7 @@ class Admin extends Component {
   };
 
   render() {
-    const { userData } = this.state;
+    const { userData, loading } = this.state;
     const { weekStart, userRole, user } = this.props;
     return (
       <div className="admin">
@@ -42,6 +44,8 @@ class Admin extends Component {
             </li>
           </ul>
         </nav>
+        { !loading && <LoadingSpinner />}
+        {loading && 
         <main className="admin-content">
         <UserList
           userData={userData}
@@ -50,6 +54,7 @@ class Admin extends Component {
           onWeekChange={shift => this.changeOfWeek(shift)}
         />
         </main>
+        }
       </div>
     );
   }

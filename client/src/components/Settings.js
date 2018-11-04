@@ -1,41 +1,23 @@
 import React, { Component } from "react";
-import { userUpdate, loadUserList, userAuth } from "../lib/DBAPI";
+import { userUpdate, loadUserList } from "../lib/DBAPI";
 import SettingsNav from "./SettingsNav";
 import { withRouter } from "react-router-dom";
+import AlertMessage from "./AlertMessage";
 
 class Settings extends Component {
   state = {
-    fname: "",
-    lname: "",
-    email: "",
+    fname: this.props.user.fname,
+    lname: this.props.user.lname,
+    email: this.props.user.email,
     password: "",
     verifyPassword: "",
     error: [],
     userList: [],
-    user: ""
+    message: ""
   };
 
   componentDidMount() {
     this.loadUsersFromServer();
-    this.localStorageUpdate();
-  }
-
-  localStorageUpdate = () => {
-    if (localStorage.getItem("JWT") && this.state.user === "") {
-      this.authenticateUser();
-    }
-  };
-
-  async authenticateUser() {
-    let res = await userAuth();
-    if (!res.success) this.setState({ error: res.error });
-    else
-      this.setState({
-        user: res,
-        fname: res.fname,
-        lname: res.lname,
-        email: res.email
-      });
   }
 
   async loadUsersFromServer() {
@@ -53,9 +35,9 @@ class Settings extends Component {
       password,
       verifyPassword,
       userList,
-      error,
-      user
+      error
     } = this.state;
+    const { user } = this.props;
     if (error.length > 0) {
       this.setState({ error: [] });
     }
@@ -80,8 +62,9 @@ class Settings extends Component {
   };
 
   async updateUser() {
-    const { fname, lname, email, password, user } = this.state;
-    const newPassword = password.length > 0 ? password : undefined;
+    const { fname, lname, email, password } = this.state;
+    const { user } = this.props;
+    const newPassword = password.length > 0 ? password : "noPasswordEntered";
     let res = await userUpdate(user.userId, fname, lname, email, newPassword);
     if (!res.user.success) {
       this.setState({ error: res.error.message || res.error });
@@ -92,8 +75,11 @@ class Settings extends Component {
         password: "",
         verifyPassword: "",
         error: [],
-        user: res.user
+        message: "Your profile information has been updated."
       });
+      window.setTimeout(() => {
+        this.setState({ message: "" });
+      }, 5000);
     }
   }
 
@@ -116,9 +102,10 @@ class Settings extends Component {
       email,
       password,
       verifyPassword,
-      user,
-      error
+      error,
+      message
     } = this.state;
+    const { user } = this.props;
     const messages = document.querySelector(".messages");
     if (error.length > 0) {
       messages.classList.add("error-alert");
@@ -143,8 +130,9 @@ class Settings extends Component {
           </ul>
         </nav>
         <div className="settings-page-container">
-        <h1>User Settings</h1>
+          <h1>User Settings</h1>
           <div className="messages" />
+          {message.length > 0 && <AlertMessage message={message} />}
           <form className="user-update-form" onSubmit={this.submitUser}>
             <label>
               First Name
@@ -180,9 +168,9 @@ class Settings extends Component {
                 required
               />
             </label>
-            <hr/>
+            <hr />
             <sup>Password fields only required if changing password:</sup>
-            <br/>
+            <br />
             <label>
               New Password
               <input

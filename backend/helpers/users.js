@@ -37,7 +37,6 @@ exports.createUser = (req, res) => {
 
 exports.updateUser = (req, res) => {
   const { userId } = req.params;
-
   // body parser lets us use the req.body
   const { fname, lname, email, newPassword } = req.body;
   if (!email || !fname || !lname) {
@@ -47,58 +46,19 @@ exports.updateUser = (req, res) => {
       error: "You must provide a first name, last name, and email"
     });
   }
-  if (newPassword) {
-    bcrypt.hash(newPassword, 10).then(hash => {
-      User.findById(userId, (error, user) => {
-        user.fname = fname;
-        user.lname = lname;
-        user.email = email.toLowerCase();
-        user.password = hash;
-        user.save((err, updatedUser) => {
-          if (err) return res.json({ success: false, error: err });
-          return res.json({
-            token: jwt.sign(
-              {
-                success: true,
-                validUser: true,
-                userRole: updatedUser.userRole,
-                userId: updatedUser._id,
-                fname: updatedUser.fname,
-                lname: updatedUser.lname,
-                email: updatedUser.email
-              },
-              process.env.SECRET_KEY
-            ),
-            user: {
-            success: true,
-            validUser: true,
-            userRole: updatedUser.userRole,
-            userId: updatedUser._id,
-            fname: updatedUser.fname,
-            lname: updatedUser.lname,
-            email: updatedUser.email
-            }
-          });
-        });
-      });
-    });
-  } else {
+  bcrypt.hash(newPassword, 10).then(hash => {
     User.findById(userId, (error, user) => {
       user.fname = fname;
       user.lname = lname;
       user.email = email.toLowerCase();
+      if (newPassword !== "noPasswordEntered") user.password = hash;
       user.save((err, updatedUser) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({
           token: jwt.sign(
             {
-              success: true,
-              validUser: true,
               userRole: updatedUser.userRole,
-              userId: updatedUser._id,
-              fname: updatedUser.fname,
-              lname: updatedUser.lname,
-              email: updatedUser.email
+              userId: updatedUser._id
             },
             process.env.SECRET_KEY
           ),
@@ -110,11 +70,11 @@ exports.updateUser = (req, res) => {
             fname: updatedUser.fname,
             lname: updatedUser.lname,
             email: updatedUser.email
-            }
+          }
         });
       });
     });
-  }
+  });
 };
 
 exports.resetPassword = (req, res) => {
@@ -132,11 +92,11 @@ exports.resetPassword = (req, res) => {
       user.password = hash;
       user.save(err => {
         if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true })
-      })
-    })
-  })
-}
+        return res.json({ success: true });
+      });
+    });
+  });
+};
 
 exports.getActivities = (req, res) => {
   const { userId } = req.params;

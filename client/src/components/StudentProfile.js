@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { updateUserPassword } from "../lib/DBAPI"
+import { updateUserPassword } from "../lib/DBAPI";
+import AlertMessage from "./AlertMessage";
 
 class StudentProfile extends Component {
   state = {
     password: "",
-    error: []
+    error: [],
+    message: ""
   };
 
   toggleProfileForm = () => {
@@ -22,10 +24,10 @@ class StudentProfile extends Component {
 
   submitUser = e => {
     e.preventDefault();
-    this.onPasswordReset()
-  }
+    this.onPasswordReset();
+  };
 
-  async onPasswordReset () {
+  async onPasswordReset() {
     const { password } = this.state;
     const { selectedUserData } = this.props;
     if (password.length === 0) return;
@@ -33,23 +35,31 @@ class StudentProfile extends Component {
     if (!res.success) {
       this.setState({ error: res.error.message || res.error });
     } else {
-      this.setState({ password: "", error: [] });
+      this.setState({
+        password: "",
+        error: [],
+        message: "The user password has been reset"
+      });
+      window.setTimeout(() => {
+        this.setState({ message: "" });
+      }, 5000);
     }
   }
 
   render() {
-    const { password } = this.state
+    const { password, message } = this.state;
     const { selectedUserData } = this.props;
 
     return (
       <div>
         <button
-          className="profile-form-toggle display-button"
+          className="profile-form-toggle display-button dropdown-button"
           onClick={this.toggleProfileForm}
         >
           Student Profile <i className="fas fa-caret-down" />
         </button>
         <div className="student-profile-container display closed">
+          {message.length > 0 && <AlertMessage message={message} />}
           <ul>
             <li>First Name: {selectedUserData.fname}</li>
             <li>Last Name: {selectedUserData.lname}</li>
@@ -68,7 +78,7 @@ class StudentProfile extends Component {
             </li>
           </ul>
         </div>
-        <hr/>
+        <hr />
       </div>
     );
   }

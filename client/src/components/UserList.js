@@ -25,6 +25,8 @@ class UserList extends Component {
     return (
       <div>
         {userData.length !== 0 ? (
+          <>
+          <h2>Select a student:</h2>
           <select
             value={selectedUser}
             name="selectedUser"
@@ -38,6 +40,7 @@ class UserList extends Component {
               </option>
             ))}
           </select>
+          </>
         ) : (
           <p>There were no users</p>
         )}

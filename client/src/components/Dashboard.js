@@ -5,10 +5,12 @@ import ActivityForm from "./ActivityForm";
 import WeekContent from "./WeekContent";
 import { loadUserActivities } from "../lib/DBAPI";
 import SettingsNav from "./SettingsNav";
+import LoadingSpinner from "./LoadingSpinner";
 
 class Dashboard extends Component {
   state = {
-    activities: []
+    activities: [],
+    loading: false
   };
 
   componentDidMount() {
@@ -19,7 +21,7 @@ class Dashboard extends Component {
     const { userId } = this.props.user;
     let res = await loadUserActivities(userId);
     if (!res.success) this.setState({ error: res.error });
-    else this.setState({ activities: res.activities });
+    else this.setState({ activities: res.activities, loading: true });
   }
 
   signOut = () => {
@@ -37,7 +39,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { activities } = this.state;
+    const { activities, loading } = this.state;
     const { weekStart, user } = this.props;
 
     return (
@@ -59,6 +61,8 @@ class Dashboard extends Component {
             </li>
           </ul>
         </nav>
+        { !loading && <LoadingSpinner />}
+        { loading &&
         <main className="dashboard-content">
           <WeekContent
             onWeekChange={shift => this.changeOfWeek(shift)}
@@ -68,6 +72,7 @@ class Dashboard extends Component {
             onActivityUpdate={this.updateActivities}
           />
         </main>
+        }
       </div>
     );
   }
