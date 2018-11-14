@@ -72,6 +72,8 @@ class StudentProfile extends Component {
                   placeholder="New Password"
                   value={password}
                   onChange={this.onChangeText}
+                  aria-label="new password"
+                  required
                 />
                 <button type="submit">Update Password</button>
               </form>

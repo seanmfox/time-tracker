@@ -9,6 +9,7 @@ const UserForm = props => (
         placeholder="First Name"
         value={props.fname}
         onChange={props.handleChangeText}
+        aria-label="first name"
         required
       />
       <input
@@ -17,6 +18,7 @@ const UserForm = props => (
         placeholder="Last Name"
         value={props.lname}
         onChange={props.handleChangeText}
+        aria-label="last name"
         required
       />
       <input
@@ -26,6 +28,7 @@ const UserForm = props => (
         placeholder="Email Address"
         value={props.email}
         onChange={props.handleChangeText}
+        aria-label="email"
         required
       />
       <input
@@ -34,6 +37,7 @@ const UserForm = props => (
         placeholder="Password"
         value={props.password}
         onChange={props.handleChangeText}
+        aria-label="password"
         required
       />
       <input
@@ -42,6 +46,7 @@ const UserForm = props => (
         placeholder="Verify password"
         value={props.verifyPassword}
         onChange={props.handleChangeText}
+        aria-label="verify password"
         required
       />
 

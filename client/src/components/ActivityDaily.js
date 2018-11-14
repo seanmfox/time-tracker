@@ -38,7 +38,7 @@ class ActivityDaily extends Component {
                 <td>{timeOutput(activity.time)}</td>
                 <td>
                   {!userRole && (
-                    <button
+                    <button aria-label="delete activity"
                       onClick={() => this.deleteActivity(activity._id)}
                       className="del-btn"
                     >

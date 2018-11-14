@@ -115,8 +115,7 @@ class ActivityForm extends Component {
                 <option value="Other">Other</option>
               </select>
             </label>
-            <label>
-              Activity Duration
+              <label id="activity-duration-label">Activity Duration</label>
               <input
                 value={hour}
                 type="number"
@@ -124,6 +123,7 @@ class ActivityForm extends Component {
                 onChange={this.onChangeTime}
                 className="duration-input"
                 placeholder="hours"
+                aria-label="hours"
               />
               <input
                 value={minute}
@@ -132,8 +132,8 @@ class ActivityForm extends Component {
                 onChange={this.onChangeTime}
                 className="duration-input"
                 placeholder="minutes"
+                aria-label="minutes"
               />
-            </label>
             <label>
               Date
               <input

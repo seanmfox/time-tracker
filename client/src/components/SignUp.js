@@ -14,6 +14,8 @@ class SignUp extends Component {
     userList: []
   };
 
+  errorMessages = React.createRef()
+
   componentDidMount() {
     this.loadUsersFromServer();
   }
@@ -81,7 +83,7 @@ class SignUp extends Component {
     const { fname, lname, email, password, verifyPassword, error } = this.state;
     const { user } = this.props;
     if (error.length > 0) {
-      const messages = document.querySelector(".messages");
+      const messages = this.errorMessages.current
       messages.classList.add("error-alert");
       messages.innerHTML = error
         .map(err => `<p class="error-message">${err}</p>`)
@@ -91,8 +93,8 @@ class SignUp extends Component {
     return (
       <div className="signup-page-container">
         <h2 className="signup-text">Join Time Tracker Today</h2>
-        <div className="messages" />
-        {!user.userRole && (
+        <div className="messages" ref={this.errorMessages}></div>
+        {!user && (
           <UserForm
             fname={fname}
             lname={lname}

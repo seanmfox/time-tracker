@@ -51,6 +51,7 @@ class SignIn extends Component {
             placeholder="Email"
             value={email}
             onChange={this.onChangeText}
+            aria-label="email"
             required
           />
           <input
@@ -61,6 +62,7 @@ class SignIn extends Component {
             placeholder="Password"
             value={password}
             onChange={this.onChangeText}
+            aria-label="password"
             required
           />
           <button type="submit" className="full-width-button">

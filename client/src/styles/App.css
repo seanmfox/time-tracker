@@ -95,9 +95,9 @@ header h1 {
 
 /* Error message handling */
 
-.messages {
+/* .messages {
   display: none;
-}
+} */
 
 .error-alert {
   display: block;
@@ -203,6 +203,10 @@ header h1 {
 .duration-input {
   margin-left: 4px;
   width: 75px;
+}
+
+#activity-duration-label {
+  display: inline;
 }
 
 .date-input {
