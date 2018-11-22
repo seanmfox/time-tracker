@@ -28,7 +28,7 @@ class App extends Component {
     if (localStorage.getItem("JWT") && this.state.user === "") {
       this.authenticateUser();
     } else {
-      this.setState({ loading: true })
+      this.setState({ loading: true });
     }
   };
 
@@ -57,71 +57,73 @@ class App extends Component {
 
   render() {
     const { user, weekStart, loading } = this.state;
-    
+
     return (
       <div className="app">
         <Header />
-        { !loading && <div className="loading-bar"></div>}
-        { loading && 
-        <div className="page-content">
-          <Route
-            path="/settings"
-            render={() =>
-              user.userRole === "admin" || user.userRole === "student" ? (
-                <Settings user={user} validUser={user => this.setUser(user)}
-                />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/"
-            render={() =>
-              user.userRole === "admin" ? (
-                <Redirect to="/admin" />
-              ) : user.userRole === "student" ? (
-                <Redirect to="/dashboard" />
-              ) : (
-                <HomePage validUser={user => this.setUser(user)} />
-              )
-            }
-          />
-          <Route
-            path="/admin"
-            render={() =>
-              user.userRole === "admin" ? (
-                <Admin
-                  validUser={user => this.setUser(user)}
-                  onWeekChange={timeChange => this.changeWeek(timeChange)}
-                  weekStart={weekStart}
-                  userRole={user.userRole}
-                  user={user}
-                />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
-          <Route
-            path="/dashboard"
-            render={() =>
-              user.userRole === "student" ? (
-                <Dashboard
-                  validUser={user => this.setUser(user)}
-                  onChangeWeek={timeChange => this.changeWeek(timeChange)}
-                  weekStart={weekStart}
-                  user={user}
-                />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
-          <Route path="/signup" render={() => <SignUp user={user} />} />
-        </div>
-        }
+        {!loading && <div className="loading-bar" />}
+        {loading && (
+          <div className="page-content">
+            <Route
+              path="/settings"
+              render={() =>
+                user.userRole === "admin" || user.userRole === "student" ? (
+                  <Settings
+                    user={user}
+                    validUser={user => this.setUser(user)}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/"
+              render={() =>
+                user.userRole === "admin" ? (
+                  <Redirect to="/admin" />
+                ) : user.userRole === "student" ? (
+                  <Redirect to="/dashboard" />
+                ) : (
+                  <HomePage validUser={user => this.setUser(user)} />
+                )
+              }
+            />
+            <Route
+              path="/admin"
+              render={() =>
+                user.userRole === "admin" ? (
+                  <Admin
+                    validUser={user => this.setUser(user)}
+                    onWeekChange={timeChange => this.changeWeek(timeChange)}
+                    weekStart={weekStart}
+                    userRole={user.userRole}
+                    user={user}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route
+              path="/dashboard"
+              render={() =>
+                user.userRole === "student" ? (
+                  <Dashboard
+                    validUser={user => this.setUser(user)}
+                    onChangeWeek={timeChange => this.changeWeek(timeChange)}
+                    weekStart={weekStart}
+                    user={user}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route path="/signup" render={() => <SignUp user={user} />} />
+          </div>
+        )}
         <Footer />
       </div>
     );

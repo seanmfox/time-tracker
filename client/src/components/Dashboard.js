@@ -54,25 +54,22 @@ class Dashboard extends Component {
               />
             </li>
             <li>
-              <SettingsNav 
-                onSignOut={this.signOut} 
-                user={user}
-              />
+              <SettingsNav onSignOut={this.signOut} user={user} />
             </li>
           </ul>
         </nav>
-        { !loading && <LoadingSpinner />}
-        { loading &&
-        <main className="dashboard-content">
-          <WeekContent
-            onWeekChange={shift => this.changeOfWeek(shift)}
-            activities={activities}
-            weekStart={weekStart}
-            userId={user.userId}
-            onActivityUpdate={this.updateActivities}
-          />
-        </main>
-        }
+        {!loading && <LoadingSpinner />}
+        {loading && (
+          <main className="dashboard-content">
+            <WeekContent
+              onWeekChange={shift => this.changeOfWeek(shift)}
+              activities={activities}
+              weekStart={weekStart}
+              userId={user.userId}
+              onActivityUpdate={this.updateActivities}
+            />
+          </main>
+        )}
       </div>
     );
   }

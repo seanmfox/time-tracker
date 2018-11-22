@@ -1,3 +1,5 @@
+import "whatwg-fetch";
+
 export async function dbRemoveActivity(userId, activityId) {
   return fetch(`/api/users/${userId}/activities/${activityId}`, {
     method: "DELETE",

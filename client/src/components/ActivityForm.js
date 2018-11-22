@@ -10,6 +10,24 @@ class ActivityForm extends Component {
     description: ""
   };
 
+  componentDidMount = () => {
+    document.addEventListener("mousedown", this.handleClick, false);
+  };
+
+  componentWillUnmount = () => {
+    document.removeEventListener("mousedown", this.handleClick, false);
+  };
+
+  handleClick = e => {
+    if (
+      !this.node.contains(e.target) &&
+      !this.node.classList.contains("closed") &&
+      !e.target.classList.contains("activity-form-toggle")
+    ) {
+      this.node.classList.add("closed");
+    }
+  };
+
   submitForm = e => {
     e.preventDefault();
     const { activityType, hour, minute, description } = this.state;
@@ -84,7 +102,10 @@ class ActivityForm extends Component {
         >
           Add Activity <i className="fas fa-caret-down" />
         </button>
-        <div className="activity-form-container dropdown closed">
+        <div
+          className="activity-form-container dropdown closed"
+          ref={node => (this.node = node)}
+        >
           <form onSubmit={this.submitForm} className="activity-form">
             <label>
               Description
@@ -115,25 +136,25 @@ class ActivityForm extends Component {
                 <option value="Other">Other</option>
               </select>
             </label>
-              <label id="activity-duration-label">Activity Duration</label>
-              <input
-                value={hour}
-                type="number"
-                name="hour"
-                onChange={this.onChangeTime}
-                className="duration-input"
-                placeholder="hours"
-                aria-label="hours"
-              />
-              <input
-                value={minute}
-                type="number"
-                name="minute"
-                onChange={this.onChangeTime}
-                className="duration-input"
-                placeholder="minutes"
-                aria-label="minutes"
-              />
+            <label id="activity-duration-label">Activity Duration</label>
+            <input
+              value={hour}
+              type="number"
+              name="hour"
+              onChange={this.onChangeTime}
+              className="duration-input"
+              placeholder="hours"
+              aria-label="hours"
+            />
+            <input
+              value={minute}
+              type="number"
+              name="minute"
+              onChange={this.onChangeTime}
+              className="duration-input"
+              placeholder="minutes"
+              aria-label="minutes"
+            />
             <label>
               Date
               <input
