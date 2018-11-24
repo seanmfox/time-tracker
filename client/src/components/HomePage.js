@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
+import clock from "../images/clock.svg"
 
 class HomePage extends Component {
   onUserSet = user => {
@@ -15,6 +16,7 @@ class HomePage extends Component {
         <Link to="/signup" className="signup-link">
           Sign up for a new account
         </Link>
+        <img src={clock} alt="clock" className="clock" />
       </div>
     );
   }

@@ -65,7 +65,7 @@ class SignIn extends Component {
             aria-label="password"
             required
           />
-          <button type="submit" className="full-width-button">
+          <button type="submit" className="dropdown-button" id="signin-button">
             Log In
           </button>
         </form>

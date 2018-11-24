@@ -38,7 +38,7 @@ td, th {
 header {
   text-align: center;
   background-color: green;
-  color: yellow;
+  color: gold;
   font-family: 'Righteous', cursive;
   font-size: 25px;
 }
@@ -53,6 +53,8 @@ header h1 {
 .signin-page-container {
   text-align: center;
   margin-bottom: 60px;
+  width: 300px;
+  margin: 0 auto;
 }
 
 .signin-form {
@@ -62,10 +64,21 @@ header h1 {
 
 .signin-input {
   width: 100%;
+  margin-bottom: 10px;
 }
 
-.full-width-button {
+#signin-button {
   width: 100%;
+  padding: 10px;
+  margin: 0 auto;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.clock {
+  margin: 20px auto;
+  width: 100%;
+
 }
 
 /* Signup Page */
@@ -136,7 +149,7 @@ header h1 {
   font-weight: 400;
   padding: 6px 12px;
   border-radius: 5px;
-  background-color: yellow;
+  background-color: gold;
   border: none;
   font-family: 'Righteous', cursive;
 }
@@ -156,7 +169,7 @@ header h1 {
 }
 
 .settings-nav-container li:hover {
-  background: yellow;
+  background: gold;
 }
 
 .activity-form-container {
@@ -222,8 +235,9 @@ header h1 {
 }
 
 .week-change-buttons button {
-  color: yellow;
+  color: gold;
   background-color: darkgreen;
+  font-size: 15px;
 }
 
 .weekly-recap {
@@ -235,6 +249,16 @@ header h1 {
 
 .weekly-recap-heading {
   margin: 0;
+}
+
+.add-activity {
+  width: 100%;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.no-activity {
+  text-align: center;
 }
 
 .activities {
@@ -268,13 +292,16 @@ header h1 {
 }
 
 .table-header-row {
-  color: yellow;
+  color: gold;
   background-color: darkgreen;
 }
 
 .table-data {
   border: 1px solid;
+}
 
+.activity td:nth-child(-n+3) {
+  width: 32%;
 }
 
 .activity-form label {
@@ -317,7 +344,7 @@ header h1 {
 footer {
   text-align: center;
   background-color: green;
-  color: yellow;
+  color: gold;
   bottom: 0;
   width: 100%;
   height: 60px;
@@ -374,7 +401,7 @@ footer {
 }
 
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 750px) {
 
   .activity-nav > ul {
     justify-content: flex-end;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { timeOutput } from "../lib/timeOutput"
+import addActivity from "../images/add_activity.svg"
 
 class WeeklyRecap extends Component {
   currentActivities = (activities, weekStart) => {
@@ -26,7 +27,6 @@ class WeeklyRecap extends Component {
       "en-US",
       { timeZone: "UTC", month: "long", day: "numeric" }
     );
-
     return (
       <div className="weekly-recap">
         <h2 className="weekly-recap-heading">
@@ -38,7 +38,7 @@ class WeeklyRecap extends Component {
           )}
         </h2>
         <hr />
-        <table className="recap-table">
+        {activitiesTypeList.length > 0 ? (<table className="recap-table">
           <tbody>
             <tr className="table-header-row">
               <th className="table-data">Type</th>
@@ -58,6 +58,7 @@ class WeeklyRecap extends Component {
             ))}
           </tbody>
         </table>
+) : (<div className="no-activity"><img className="add-activity" src={addActivity} alt="Add an activity"/><p>No Activities Tracked This Week</p></div>)}
       </div>
     );
   }
