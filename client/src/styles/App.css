@@ -1,10 +1,5 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-#root {
+html,
+body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -21,15 +16,12 @@ html, body {
   flex: 1;
 }
 
-.dropdown-button {
-  font-family: 'Righteous', cursive;
-}
-
 h2 {
   color: darkgreen;
 }
 
-td, th {
+td,
+th {
   padding: 4px;
 }
 
@@ -39,7 +31,7 @@ header {
   text-align: center;
   background-color: green;
   color: gold;
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
   font-size: 25px;
 }
 
@@ -47,7 +39,6 @@ header h1 {
   margin: 0;
   padding-top: 10px;
 }
-
 
 /* Signin Page */
 .signin-page-container {
@@ -78,12 +69,12 @@ header h1 {
 .clock {
   margin: 20px auto;
   width: 100%;
-
 }
 
 /* Signup Page */
 
-.signup-page-container, .settings-page-container {
+.signup-page-container,
+.settings-page-container {
   text-align: center;
   margin: 10px;
   border: 1px solid;
@@ -91,11 +82,13 @@ header h1 {
   overflow: hidden;
 }
 
-.user-signup-form-container, .user-update-form {
+.user-signup-form-container,
+.user-update-form {
   padding: 20px;
 }
 
-.user-signup-form input, .user-update-form input {
+.user-signup-form input,
+.user-update-form input {
   display: block;
   width: 100%;
 }
@@ -107,10 +100,6 @@ header h1 {
 }
 
 /* Error message handling */
-
-/* .messages {
-  display: none;
-} */
 
 .error-alert {
   display: block;
@@ -151,10 +140,8 @@ header h1 {
   border-radius: 5px;
   background-color: gold;
   border: none;
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
 }
-
-/* Activity Form */
 
 .dropdown {
   background-color: white;
@@ -164,6 +151,8 @@ header h1 {
   box-shadow: 1px 1px 10px 2px grey;
 }
 
+/* Settings Navigation */
+
 .settings-nav-container a {
   display: block;
 }
@@ -171,6 +160,19 @@ header h1 {
 .settings-nav-container li:hover {
   background: gold;
 }
+
+.signout-button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  font-family: sans-serif;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+/* Activity Form */
 
 .activity-form-container {
   left: 0;
@@ -184,7 +186,8 @@ header h1 {
   margin-right: 15px;
 }
 
-.settings-nav-container ul, .student-profile-container ul {
+.settings-nav-container ul,
+.student-profile-container ul {
   list-style: none;
   padding: 0;
 }
@@ -192,17 +195,6 @@ header h1 {
 .settings-nav-container a {
   color: black;
   text-decoration: none;
-}
-
-.signout-button {
-  background: none;
-  border: none;
-  padding: 0;
-  width: 100%;
-  text-align: left;
-  font-family: sans-serif;
-  font-size: inherit;
-  cursor: pointer;
 }
 
 .description-input {
@@ -226,6 +218,20 @@ header h1 {
   margin-left: 86px;
 }
 
+.activity-form label {
+  display: block;
+}
+
+.closed {
+  display: none;
+}
+
+.activity-submit {
+  margin-left: 0;
+}
+
+/* Week Change Components */
+
 .week-change-buttons {
   margin-top: 20px;
   display: flex;
@@ -239,6 +245,8 @@ header h1 {
   background-color: darkgreen;
   font-size: 15px;
 }
+
+/* Weekly Recap Component */
 
 .weekly-recap {
   border: 1px solid;
@@ -260,6 +268,8 @@ header h1 {
 .no-activity {
   text-align: center;
 }
+
+/* Activity Grid */ 
 
 .activities {
   display: flex;
@@ -283,12 +293,12 @@ header h1 {
   margin: 0;
 }
 
-.day-table, .recap-table {
+.day-table,
+.recap-table {
   width: 100%;
   text-align: left;
   font-size: 15px;
   border-collapse: collapse;
-
 }
 
 .table-header-row {
@@ -300,20 +310,8 @@ header h1 {
   border: 1px solid;
 }
 
-.activity td:nth-child(-n+3) {
+.activity td:nth-child(-n + 3) {
   width: 32%;
-}
-
-.activity-form label {
-  display: block;
-}
-
-.closed {
-  display: none;
-}
-
-.activity-submit {
-  margin-left: 0;
 }
 
 /* Settings Page */
@@ -325,13 +323,15 @@ header h1 {
   margin-bottom: 15px;
 }
 
-.settings .activity-nav ul, .admin .activity-nav ul {
+.settings .activity-nav ul,
+.admin .activity-nav ul {
   justify-content: flex-end;
 }
 
 /* Admin Page */
 
-.admin-content, .dashboard-content {
+.admin-content,
+.dashboard-content {
   margin: 10px 10px 0;
 }
 
@@ -355,7 +355,6 @@ footer {
   padding-top: 10px;
 }
 
-
 /* Loading Spinner */
 
 .lds-ring {
@@ -374,7 +373,7 @@ footer {
   border: 6px solid black;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color:black transparent transparent transparent;
+  border-color: black transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
@@ -400,9 +399,7 @@ footer {
   background: green;
 }
 
-
 @media screen and (min-width: 750px) {
-
   .activity-nav > ul {
     justify-content: flex-end;
     margin: 0 auto;
@@ -422,17 +419,20 @@ footer {
   .display-button {
     margin-left: 0;
   }
-  
+
   .activity-form-container {
     width: 300px;
   }
 
-  .week-content, .admin-content {
+  .week-content,
+  .admin-content {
     width: 700px;
     margin: 10px auto 0;
   }
 
-  .signin-page-container, .signup-page-container, .settings-page-container {
+  .signin-page-container,
+  .signup-page-container,
+  .settings-page-container {
     width: 400px;
     margin: 20px auto;
   }
@@ -441,7 +441,8 @@ footer {
     font-size: 20px;
   }
 
-  .day-table, .recap-table {
+  .day-table,
+  .recap-table {
     font-size: 22px;
   }
 }

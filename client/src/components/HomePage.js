@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
-import clock from "../images/clock.svg"
+import clock from "../images/clock.svg";
 
 class HomePage extends Component {
   onUserSet = user => {
