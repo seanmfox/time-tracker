@@ -17,3 +17,6 @@ Application to assist college students in tracking time spent on major tasks dur
 1. Follow set-up instructions for development.
 2. Run `cd client && npm run build` to create the production build.
 3. Run `npm run start` to begin the node server that will serve the React app and Express backend.
+
+## Live Site
+The site can be accessed at https://opptimetracker.com.
