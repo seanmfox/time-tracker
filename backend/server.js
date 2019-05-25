@@ -14,15 +14,20 @@ const {
 	adminOnlyData
 } = require('./middleware/auth');
 
-// and create our instances
 require('dotenv').config();
+
 const app = express();
 const router = express.Router();
+
 app.use(cookieParser());
-const cookieOptions = {
-	httpOnly: true,
-	secure: true
-};
+
+let cookieOptions = {};
+
+if (process.env.NODE_ENV === 'production') {
+	cookieOptions = { httpOnly: true, secure: true };
+} else {
+	cookieOptions = { httpOnly: true };
+}
 
 // set our port to either a predetermined port number if you have set it up, or 3001
 const PORT = process.env.PORT || 3001;
