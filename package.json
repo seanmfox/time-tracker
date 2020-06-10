@@ -17,15 +17,15 @@
   "author": "Sean Fox",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^3.0.8",
     "body-parser": "^1.18.3",
     "concurrently": "^3.6.0",
-    "cookie-parser": "^1.4.4",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.4.14",
-    "morgan": "^1.9.1",
+    "mongoose": "^5.9.18",
+    "morgan": "^1.10.0",
     "nodemon": "^1.17.5"
   },
   "devDependencies": {
