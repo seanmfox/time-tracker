@@ -17,7 +17,7 @@
   "author": "Sean Fox",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "concurrently": "^3.6.0",
     "cookie-parser": "^1.4.5",
